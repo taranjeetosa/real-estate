@@ -5,12 +5,12 @@ import {
   BadgeCheck,
   Brain,
   Check,
+  ChevronLeft,
+  ChevronRight,
   Clock3,
   Code2,
   Download,
   FileText,
-  Pause,
-  Play,
   Sparkles,
   Target,
   X,
@@ -195,30 +195,120 @@ function AiAcademyOverview({ onGetStarted }) {
 }
 
 function LearnerTestimonials() {
-  const [isPaused, setIsPaused] = useState(false);
+  const scrollerRef = useRef(null);
+  const trackRef = useRef(null);
+  const resumeTimerRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const isPaused = isHovered || isFocused || isInteracting || prefersReducedMotion;
+
+  useEffect(() => {
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = (event) => setPrefersReducedMotion(event.matches);
+
+    motionPreference.addEventListener("change", updateMotionPreference);
+    return () => motionPreference.removeEventListener("change", updateMotionPreference);
+  }, []);
+
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const track = trackRef.current;
+    if (!scroller || !track || isPaused) return undefined;
+
+    let frame = 0;
+    const loop = () => {
+      const loopPoint = track.children[1]?.offsetLeft || 0;
+      if (loopPoint > 0) {
+        scroller.scrollLeft += 0.55;
+        if (scroller.scrollLeft >= loopPoint) scroller.scrollLeft -= loopPoint;
+      }
+      frame = window.requestAnimationFrame(loop);
+    };
+
+    frame = window.requestAnimationFrame(loop);
+    return () => window.cancelAnimationFrame(frame);
+  }, [isPaused]);
+
+  useEffect(() => () => {
+    if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
+  }, []);
+
+  function scrollTestimonials(direction) {
+    const scroller = scrollerRef.current;
+    const track = trackRef.current;
+    const firstGroup = track?.children[0];
+    const card = firstGroup?.querySelector(".testimonial-card");
+    const loopPoint = track?.children[1]?.offsetLeft || 0;
+    if (!scroller || !track || !firstGroup || !card || !loopPoint) return;
+
+    const cardGap = Number.parseFloat(window.getComputedStyle(firstGroup).columnGap) || 0;
+    const step = card.getBoundingClientRect().width + cardGap;
+    setIsInteracting(true);
+    if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
+
+    if (direction < 0 && scroller.scrollLeft < step) {
+      scroller.scrollLeft += loopPoint;
+    }
+
+    scroller.scrollBy({
+      left: direction * step,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
+    resumeTimerRef.current = window.setTimeout(() => {
+      setIsInteracting(false);
+      resumeTimerRef.current = null;
+    }, 900);
+  }
 
   return (
-    <div className="testimonials-panel">
+    <div
+      className="testimonials-panel"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocusCapture={() => setIsFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
+      }}
+    >
       <div className="testimonials-heading">
         <div>
           <p className="why-kicker">LEARNER STORIES</p>
           <h3>In their own words.</h3>
         </div>
-        <button
-          className="testimonial-toggle"
-          type="button"
-          aria-label={isPaused ? "Resume testimonial scroll" : "Pause testimonial scroll"}
-          aria-pressed={isPaused}
-          onClick={() => setIsPaused((paused) => !paused)}
-        >
-          {isPaused ? <Play size={13} fill="currentColor" /> : <Pause size={13} />}
-          <span>{isPaused ? "Paused" : "Pause"}</span>
-        </button>
+        <div className="testimonial-controls" aria-label="Scroll testimonials">
+          <button
+            className="testimonial-arrow"
+            type="button"
+            aria-label="Scroll testimonials left"
+            onClick={() => scrollTestimonials(-1)}
+          >
+            <ChevronLeft size={19} />
+          </button>
+          <button
+            className="testimonial-arrow"
+            type="button"
+            aria-label="Scroll testimonials right"
+            onClick={() => scrollTestimonials(1)}
+          >
+            <ChevronRight size={19} />
+          </button>
+        </div>
       </div>
 
-      <div className="testimonial-viewport" aria-label="Learner testimonials">
+      <div
+        className="testimonial-viewport"
+        ref={scrollerRef}
+        role="region"
+        aria-label="Learner testimonials"
+        aria-roledescription="carousel"
+        tabIndex={0}
+      >
         {publishedTestimonials.length > 0 ? (
-          <div className={`testimonial-track${isPaused ? " is-paused" : ""}`}>
+          <div className="testimonial-track" ref={trackRef}>
             {[false, true].map((isDuplicate) => (
               <div
                 className="testimonial-group"
