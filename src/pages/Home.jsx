@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -7,8 +7,13 @@ import {
   Check,
   Clock3,
   Code2,
+  Download,
+  FileText,
+  Pause,
+  Play,
   Sparkles,
   Target,
+  X,
 } from "lucide-react";
 import Footer from "../components/Footer.jsx";
 import Navbar from "../components/Navbar.jsx";
@@ -19,6 +24,8 @@ import {
   learningSteps,
   specialistTracks,
 } from "../data/aiCourse.js";
+import learnerTestimonials from "../data/testimonials.js";
+import { whyChooseReasons } from "../data/whyChoose.js";
 
 const navigationLinks = [
   { label: "About", href: "#about" },
@@ -32,6 +39,10 @@ const heroSlides = [
   "/pexels-thisisengineering-3913031.jpg",
   "/pexels-mikhail-nilov-7988217.jpg",
 ];
+
+const publishedTestimonials = learnerTestimonials
+  .filter(({ published }) => published)
+  .sort((first, second) => first.sortOrder - second.sortOrder);
 
 function HeroBackgroundSlideshow() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -170,7 +181,7 @@ function AiAcademyOverview({ onGetStarted }) {
           <button className="inline-link" type="button" onClick={onGetStarted}>Choose your track <ArrowRight size={16} /></button>
         </div>
       </div>
-      <div className="benefit-grid" id="why-ai">
+      <div className="benefit-grid">
         {courseBenefits.map(({ title, description, icon: Icon }, index) => (
           <article className="benefit-card" key={title}>
             <div className="benefit-top"><span className="benefit-icon"><Icon size={20} /></span><span className="benefit-number">0{index + 1}</span></div>
@@ -183,6 +194,101 @@ function AiAcademyOverview({ onGetStarted }) {
   );
 }
 
+function LearnerTestimonials() {
+  const [isPaused, setIsPaused] = useState(false);
+
+  return (
+    <div className="testimonials-panel">
+      <div className="testimonials-heading">
+        <div>
+          <p className="why-kicker">LEARNER STORIES</p>
+          <h3>In their own words.</h3>
+        </div>
+        <button
+          className="testimonial-toggle"
+          type="button"
+          aria-label={isPaused ? "Resume testimonial scroll" : "Pause testimonial scroll"}
+          aria-pressed={isPaused}
+          onClick={() => setIsPaused((paused) => !paused)}
+        >
+          {isPaused ? <Play size={13} fill="currentColor" /> : <Pause size={13} />}
+          <span>{isPaused ? "Paused" : "Pause"}</span>
+        </button>
+      </div>
+
+      <div className="testimonial-viewport" aria-label="Learner testimonials">
+        {publishedTestimonials.length > 0 ? (
+          <div className={`testimonial-track${isPaused ? " is-paused" : ""}`}>
+            {[false, true].map((isDuplicate) => (
+              <div
+                className="testimonial-group"
+                key={isDuplicate ? "duplicate" : "original"}
+                aria-hidden={isDuplicate}
+              >
+                {publishedTestimonials.map(({ id, name, role, text, image }) => (
+                  <article className="testimonial-card" key={`${id}-${isDuplicate}`}>
+                    <span className="testimonial-mark" aria-hidden="true">“</span>
+                    <p className="testimonial-quote">{text}</p>
+                    <div className="testimonial-author">
+                      <img src={image} alt="" loading="lazy" />
+                      <div>
+                        <h4>{name}</h4>
+                        <p>{role}</p>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="testimonials-empty">Learner stories will appear here soon.</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function WhyChooseAcademy() {
+  return (
+    <section className="why-section" id="why-ai" aria-labelledby="why-ai-title">
+      <div className="why-inner">
+        <div className="why-left">
+          <div className="why-heading">
+            <p className="why-kicker">WHY ONE STOCK ACADEMY</p>
+            <h2 id="why-ai-title">Why choose <span>ONE STOCK ACADEMY</span></h2>
+            <p>Practical, no-code AI learning that fits your role and your schedule.</p>
+            <div className="why-actions">
+              <a className="button button-primary" href="#tracks">
+                Explore specialist tracks <ArrowRight size={16} />
+              </a>
+              <a className="why-secondary-link" href="#journey">
+                See how the programme works <ArrowRight size={15} />
+              </a>
+            </div>
+          </div>
+
+          <div className="why-grid">
+            {whyChooseReasons.map(({ title, description, icon: Icon }, index) => (
+              <article className="why-card" key={title}>
+                <span className="why-icon"><Icon size={18} /></span>
+                <div className="why-card-copy">
+                  <div className="why-card-heading">
+                    <h3>{title}</h3>
+                    <span className="why-number">0{index + 1}</span>
+                  </div>
+                  <p>{description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <LearnerTestimonials />
+      </div>
+    </section>
+  );
+}
 function CourseModules({ onChooseTrack }) {
   return (
     <section className="tracks-section" id="tracks">
@@ -200,7 +306,7 @@ function CourseModules({ onChooseTrack }) {
             <h3>{title}</h3>
             <p className="track-description">{description}</p>
             <p className="track-audience">{audience}</p>
-            <button className="track-link" type="button" onClick={() => onChooseTrack(title)} aria-label={`Enquire about ${title}`}>
+            <button className="track-link" type="button" onClick={() => onChooseTrack(title)} aria-label={`View syllabus for ${title}`}>
               Explore this track <ArrowRight size={16} />
             </button>
           </article>
@@ -208,6 +314,97 @@ function CourseModules({ onChooseTrack }) {
       </div>
       <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>Every track includes <strong>10 lessons</strong>, around <strong>20 hours</strong> of online learning, and a CampusSeat-issued certificate on completion.</p></div>
     </section>
+  );
+}
+
+function TrackSyllabusModal({ track, onClose }) {
+  const dialogRef = useRef(null);
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (!track) return undefined;
+
+    const previousFocus = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus instanceof HTMLElement) previousFocus.focus();
+    };
+  }, [track]);
+
+  if (!track) return null;
+
+  function handleKeyDown(event) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      onClose();
+      return;
+    }
+
+    if (event.key !== "Tab") return;
+
+    const focusableElements = dialogRef.current?.querySelectorAll(
+      'button:not([disabled]), a[href]',
+    );
+    if (!focusableElements?.length) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  }
+
+  return (
+    <div
+      className="track-modal-backdrop"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
+    >
+      <section
+        className="track-modal"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="track-modal-title"
+        onKeyDown={handleKeyDown}
+      >
+        <button
+          className="track-modal-close"
+          type="button"
+          aria-label="Close syllabus dialog"
+          onClick={onClose}
+          ref={closeButtonRef}
+        >
+          <X size={18} />
+        </button>
+        <div className="track-modal-icon" aria-hidden="true">
+          <FileText size={43} strokeWidth={1.8} />
+          <span>PDF</span>
+        </div>
+        <h2 id="track-modal-title">{track} <span>(20 hrs — 10 Lessons)</span></h2>
+        <p className="track-modal-description">
+          Get the detailed syllabus, programme structure, and learning
+          outcomes for this track.
+        </p>
+        <a
+          className="button track-modal-download"
+          href="/Trading_Masterclass_Syllabus.pdf"
+          download="Trading_Masterclass_Syllabus.pdf"
+        >
+          Download PDF <Download size={19} />
+        </a>
+      </section>
+    </div>
   );
 }
 
@@ -319,7 +516,9 @@ function CourseEnrollmentCard({
 
 export default function Home() {
   const [selectedTrack, setSelectedTrack] = useState(specialistTracks[0].title);
+  const [activeTrack, setActiveTrack] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const closeTrackModal = useCallback(() => setActiveTrack(null), []);
 
   function goToEnquiry(track) {
     if (track) setSelectedTrack(track);
@@ -327,6 +526,11 @@ export default function Home() {
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
       block: "start",
     });
+  }
+
+  function openTrackSyllabus(track) {
+    setSelectedTrack(track);
+    setActiveTrack(track);
   }
 
   function handleSubmit(event) {
@@ -342,7 +546,8 @@ export default function Home() {
         <AiCourseHero onGetStarted={() => goToEnquiry()} />
         <CourseOverviewStats />
         <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
-        <CourseModules onChooseTrack={goToEnquiry} />
+        <WhyChooseAcademy />
+        <CourseModules onChooseTrack={openTrackSyllabus} />
         <CourseJourney onGetStarted={() => goToEnquiry()} />
         <CourseFaq />
         <CourseEnrollmentCard
@@ -355,6 +560,7 @@ export default function Home() {
       </main>
       <Footer />
       <ScrollToTop />
+      <TrackSyllabusModal track={activeTrack} onClose={closeTrackModal} />
     </>
   );
 }
