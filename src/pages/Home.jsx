@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
@@ -26,12 +26,67 @@ const navigationLinks = [
   { label: "Why AI Academy", href: "#why-ai" },
 ];
 
+const heroSlides = [
+  "/executive-slider.jpeg",
+  "/pexels-tima-miroshnichenko-7567525.jpg",
+  "/pexels-thisisengineering-3913031.jpg",
+  "/pexels-mikhail-nilov-7988217.jpg",
+];
+
+function HeroBackgroundSlideshow() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [loadedSlides, setLoadedSlides] = useState([]);
+
+  useEffect(() => {
+    if (
+      loadedSlides.length !== heroSlides.length ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % heroSlides.length);
+    }, 4000);
+
+    return () => window.clearInterval(intervalId);
+  }, [loadedSlides.length]);
+
+  return (
+    <div className="hero-background" aria-hidden="true">
+      {heroSlides.map((src, index) => {
+        const isLoaded = loadedSlides.includes(src);
+        const isActive = isLoaded && index === activeSlide;
+
+        return (
+          <img
+            key={src}
+            className={`hero-background-image${isActive ? " is-active" : ""}`}
+            src={src}
+            alt=""
+            loading="eager"
+            fetchPriority={index === 0 ? "high" : "auto"}
+            onLoad={() => {
+              setLoadedSlides((loaded) =>
+                loaded.includes(src) ? loaded : [...loaded, src],
+              );
+            }}
+            onError={() => console.error(`Unable to load hero slide: ${src}`)}
+          />
+        );
+      })}
+      <div className="hero-background-overlay" />
+    </div>
+  );
+}
+
 function AiCourseHero({ onGetStarted }) {
   return (
     <section className="hero" id="home">
+      <HeroBackgroundSlideshow />
       <div className="hero-grid">
         <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-dot" /> SKILL EDUCATION <span className="eyebrow-divider">/</span> BRAINCRUISE CERTIFIED</p>
+
           <h1>Make AI work<br />for <span>your work.</span></h1>
           <p className="hero-description">
             Turn AI from a buzzword into a practical skill. Learn with real
@@ -66,7 +121,7 @@ function AiCourseHero({ onGetStarted }) {
             <div className="visual-card-footer"><span>YOUR LEARNING PATH</span><span>01 — 10</span></div>
           </div>
           <div className="float-chip chip-top"><Sparkles size={16} /> Useful from day one</div>
-          <div className="float-chip chip-bottom"><BadgeCheck size={17} /> Braincruise certified</div>
+          <div className="float-chip chip-bottom"><BadgeCheck size={17} /> CampusSeat certified</div>
           <div className="visual-star star-one">✳</div>
           <div className="visual-star star-two">✳</div>
         </div>
@@ -83,7 +138,7 @@ function CourseOverviewStats() {
     { title: "~20 hours", detail: "per specialist track", icon: Clock3 },
     { title: "10 lessons", detail: "structured for practice", icon: Target },
     { title: "Zero coding", detail: "no technical background needed", icon: Code2 },
-    { title: "Certificate", detail: "issued by Braincruise", icon: BadgeCheck },
+    { title: "Certificate", detail: "issued by CampusSeat", icon: BadgeCheck },
   ];
 
   return (
@@ -108,10 +163,10 @@ function AiAcademyOverview({ onGetStarted }) {
       <div className="about-content">
         <p className="about-lead">
           The AI Academy, powered by CampusSeat, helps you bring AI into
-          the work you already do.
+          the practical, everyday skills you need.
         </p>
         <div className="about-detail">
-          <p>Every track is hands-on and no-code by design. Choose a specialisation made for your function or industry, practise with useful AI tools, and leave with workflows you can put to work right away.</p>
+          <p>Each programme is built around a specific function or industry, so learners build exactly the capability their role needs. On completion, every learner receives a Braincruise-issued certification recognising their applied AI competency in their chosen specialisation.</p>
           <button className="inline-link" type="button" onClick={onGetStarted}>Choose your track <ArrowRight size={16} /></button>
         </div>
       </div>
@@ -151,7 +206,7 @@ function CourseModules({ onChooseTrack }) {
           </article>
         ))}
       </div>
-      <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>Every track includes <strong>10 lessons</strong>, around <strong>20 hours</strong> of online learning, and a Braincruise-issued certificate on completion.</p></div>
+      <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>Every track includes <strong>10 lessons</strong>, around <strong>20 hours</strong> of online learning, and a CampusSeat-issued certificate on completion.</p></div>
     </section>
   );
 }
@@ -185,7 +240,7 @@ function CourseFaq() {
     <section className="section faq-section" id="faq">
       <div className="faq-heading">
         <p className="section-kicker">GOOD TO KNOW</p>
-        <h2>Questions, <span>answered.</span></h2>
+        <h2>FAQ<span>s.</span></h2>
         <p>Everything you need to know before you get started.</p>
       </div>
       <div className="faq-list">

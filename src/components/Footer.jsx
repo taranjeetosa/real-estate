@@ -83,11 +83,8 @@ export default function Footer() {
         </div>
 
         <div className="footer-course-note">
-          <h2>About the programme</h2>
-          <p>
-            Each specialist track is designed for practical, no-code learning
-            and includes 10 lessons with about 20 hours of online study.
-            Braincruise issues the certificate upon completion.
+          <h2>Disclaimer</h2>
+          <p>The information provided in this brochure is intended for general informational and promotional purposes only. Course content, modules, learning outcomes, schedules, faculty, fees, certifications, and program delivery may be updated or modified by ONE STOCK ACADEMY without prior notice to reflect industry trends and academic improvements. Participation in this program does not guarantee employment, promotion, or specific business outcomes. Learners are encouraged to verify the latest course details with ONE STOCK ACADEMY before enrollment. All trademarks, logos, and third-party product names mentioned remain the property of their respective owners.
           </p>
         </div>
 
