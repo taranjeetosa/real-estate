@@ -390,14 +390,14 @@ function CourseModules({ onChooseTrack }) {
         <p className="tracks-intro">Start with the work you know. Pick a focused track and explore how AI can help you do it better.</p>
       </div>
       <div className="tracks-grid">
-        {specialistTracks.map(({ title, description, audience, icon: Icon }, index) => (
+        {specialistTracks.map(({ title, description, audience }, index) => (
           <article className="track-card" key={title}>
-            <div className="track-card-top"><span className="track-icon"><Icon size={21} /></span><span className="track-index">0{index + 1}</span></div>
+            <div className="track-card-top"><span className="track-index">TRACK 0{index + 1}</span></div>
             <h3>{title}</h3>
             <p className="track-description">{description}</p>
             <p className="track-audience">{audience}</p>
             <button className="track-link" type="button" onClick={() => onChooseTrack(title)} aria-label={`View syllabus for ${title}`}>
-              Explore this track <ArrowRight size={16} />
+              Know more <ArrowRight className="track-link-arrow" size={16} />
             </button>
           </article>
         ))}
@@ -556,11 +556,13 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
 
   return (
     <>
-      <div className="form-heading"><span>LET’S TALK AI</span><h3>Find your track</h3><p>Share a few details to get started.</p></div>
+      <div className="form-heading"><span>REGISTER YOUR INTEREST</span><h3>Find your track</h3><p>Share a few details to get started.</p></div>
       <label htmlFor="full-name">Your name</label>
       <input id="full-name" name="name" type="text" autoComplete="name" placeholder="e.g. Alex Morgan" required />
       <label htmlFor="email">Email address</label>
       <input id="email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required />
+      <label htmlFor="phone">Phone number</label>
+      <input id="phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+91 98765 43210" required />
       <label htmlFor="track">Choose a specialist track</label>
       <select id="track" name="track" value={selectedTrack} onChange={(event) => onTrackChange(event.target.value)}>
         {specialistTracks.map((track) => <option key={track.title} value={track.title}>{track.title}</option>)}
@@ -579,27 +581,15 @@ function CourseEnrollmentCard({
   onReset,
 }) {
   return (
-    <section className="enquiry-section" id="enquire">
-      <div className="section enquiry-grid">
-        <div className="enquiry-copy">
-          <p className="section-kicker">YOUR NEXT STEP STARTS HERE</p>
-          <h2>Ready to make AI <span>your advantage?</span></h2>
-          <p>Tell us which track caught your eye. We’ll help you find your next step.</p>
-          <div className="enquiry-points">
-            <span><Check size={16} /> No coding required</span>
-            <span><Check size={16} /> Flexible online learning</span>
-            <span><Check size={16} /> Certificate on completion</span>
-          </div>
-        </div>
-        <form className="enquiry-form" onSubmit={onSubmit}>
-          <InterestForm
-            selectedTrack={selectedTrack}
-            onTrackChange={onTrackChange}
-            submitted={submitted}
-            onReset={onReset}
-          />
-        </form>
-      </div>
+    <section className="enquiry-section" id="enquire" aria-label="Register your interest">
+      <form className="enquiry-form" onSubmit={onSubmit}>
+        <InterestForm
+          selectedTrack={selectedTrack}
+          onTrackChange={onTrackChange}
+          submitted={submitted}
+          onReset={onReset}
+        />
+      </form>
     </section>
   );
 }
@@ -637,16 +627,22 @@ export default function Home() {
         <CourseOverviewStats />
         <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
         <WhyChooseAcademy />
-        <CourseModules onChooseTrack={openTrackSyllabus} />
-        <CourseJourney onGetStarted={() => goToEnquiry()} />
-        <CourseFaq />
-        <CourseEnrollmentCard
-          selectedTrack={selectedTrack}
-          onTrackChange={setSelectedTrack}
-          submitted={submitted}
-          onSubmit={handleSubmit}
-          onReset={() => setSubmitted(false)}
-        />
+        <div className="course-followup-layout">
+          <div className="course-followup-content">
+            <CourseModules onChooseTrack={openTrackSyllabus} />
+            <CourseJourney onGetStarted={() => goToEnquiry()} />
+            <CourseFaq />
+          </div>
+          <aside className="course-registration-rail">
+            <CourseEnrollmentCard
+              selectedTrack={selectedTrack}
+              onTrackChange={setSelectedTrack}
+              submitted={submitted}
+              onSubmit={handleSubmit}
+              onReset={() => setSubmitted(false)}
+            />
+          </aside>
+        </div>
       </main>
       <Footer />
       <ScrollToTop />
