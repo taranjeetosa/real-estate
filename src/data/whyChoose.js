@@ -18,7 +18,7 @@ export const whyChooseReasons = [
   },
   {
     title: "Certified by CampusSeat",
-    description: "CampusSeat is the certifying authority and issues the certificate upon completion.",
+    description: "CampusSeat is the certifying authority and certifies every learner upon completion.",
     icon: ShieldCheck,
   },
   {

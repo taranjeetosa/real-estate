@@ -205,7 +205,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .course-followup-layout { max-width: 1600px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr); align-items: stretch; }
 .course-followup-content { min-width: 0; }
 .course-registration-rail { min-width: 0; background: transparent; }
-.enquiry-section { position: sticky; top: 88px; align-self: start; max-height: calc(100vh - 108px); max-height: calc(100svh - 108px); overflow-y: auto; display: grid; gap: 14px; padding: 22px 18px; scroll-margin-top: 88px; }
+.enquiry-section { position: sticky; top: 88px; align-self: start; display: grid; gap: 14px; padding: 15px 18px 22px; scroll-margin-top: 88px; }
+
 .enquiry-form { min-height: 0; padding: 20px 17px; background: var(--white); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 18px 48px #0808080b; }
 .form-heading span { color: var(--blue-deep); font-size: 9px; font-weight: 700; letter-spacing: .16em; }
 .form-heading h3 { margin: 7px 0 3px; font: 700 22px "Manrope", sans-serif; letter-spacing: -.04em; }
@@ -314,6 +315,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 }
 @media (max-width: 900px) {
   .course-followup-layout { grid-template-columns: 1fr; }
+}
+@media (max-height: 850px) and (min-width: 901px) {
+  .enquiry-section { position: static; }
 }
 @media (max-width: 700px) {
   html { scroll-padding-top: 70px; }

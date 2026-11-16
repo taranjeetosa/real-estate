@@ -138,7 +138,7 @@ function AiCourseHero({ onGetStarted }) {
             <div className="visual-card-footer"><span>YOUR LEARNING PATH</span><span>01 — 10</span></div>
           </div>
           <div className="float-chip chip-top"><Sparkles size={16} /> Useful from day one</div>
-          <div className="float-chip chip-bottom"><BadgeCheck size={17} /> CampusSeat certified</div>
+          <div className="float-chip chip-bottom"><BadgeCheck size={17} /> Certified by CampusSeat</div>
           <div className="visual-star star-one">✳</div>
           <div className="visual-star star-two">✳</div>
         </div>
@@ -156,7 +156,7 @@ function CourseOverviewStats() {
     { title: "~20 hours", detail: "per specialist track", icon: Clock3 },
     { title: "10 lessons", detail: "structured for practice", icon: Target },
     { title: "Zero coding", detail: "no technical background needed", icon: Code2 },
-    { title: "Certificate", detail: "issued by CampusSeat", icon: BadgeCheck },
+    { title: "Certificate", detail: "certified by CampusSeat", icon: BadgeCheck },
   ];
 
   return (
@@ -180,11 +180,12 @@ function AiAcademyOverview({ onGetStarted }) {
       </div>
       <div className="about-content">
         <p className="about-lead">
-          The AI Academy, powered by CampusSeat, helps you bring AI into
-          the practical, everyday skills you need.
+          The AI Academy is powered by{" "}
+          <span className="powered-by-highlight">Braincruise</span> to help you bring AI
+          into the practical, everyday skills you need.
         </p>
         <div className="about-detail">
-          <p>Each programme is built around a specific function or industry, so learners build exactly the capability their role needs. On completion, every learner receives a Braincruise-issued certification recognising their applied AI competency in their chosen specialisation.</p>
+          <p>Each programme is built around a specific function or industry, so learners build exactly the capability their role needs. On completion, every learner is certified by CampusSeat, the certifying authority, for their applied AI competency in their chosen specialisation.</p>
           <button className="inline-link" type="button" onClick={onGetStarted}>Choose your track <ArrowRight size={16} /></button>
         </div>
       </div>
@@ -409,7 +410,7 @@ function CourseModules({ onChooseTrack }) {
           </article>
         ))}
       </div>
-      <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>Every track includes <strong>10 lessons</strong>, around <strong>20 hours</strong> of online learning, and a CampusSeat-issued certificate on completion.</p></div>
+      <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>Every track includes <strong>10 lessons</strong>, around <strong>20 hours</strong> of online learning, and certification by CampusSeat upon completion.</p></div>
     </section>
   );
 }
@@ -575,7 +576,7 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
         {specialistTracks.map((track) => <option key={track.title} value={track.title}>{track.title}</option>)}
       </select>
       <button className="button button-primary form-submit" type="submit">Show my interest <ArrowRight size={17} /></button>
-      <p className="form-note">Demo form only. Your details stay in this browser and are not sent.</p>
+      
     </>
   );
 }
@@ -604,7 +605,7 @@ function WhoThisIsForCard() {
         ))}
       </ul>
       <p className="audience-certification">
-        <strong>Certification:</strong> Issued by CampusSeat upon completion.
+        <strong>Certification:</strong> Certified by CampusSeat upon completion.
       </p>
     </section>
   );
