@@ -47,14 +47,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .button-nav:hover, .button-primary:hover { background: var(--blue); color: var(--ink); }
 .menu-toggle { display: none; }
 
-.hero { background: var(--ink); color: var(--white); padding: 66px max(6.7vw, calc((100vw - 1300px) / 2)) 0; position: relative; overflow: hidden; }
+.hero { min-height: calc(100vh - 72px); min-height: calc(100svh - 72px); display: flex; flex-direction: column; background: var(--ink); color: var(--white); padding: 34px max(6.7vw, calc((100vw - 1300px) / 2)) 0; position: relative; overflow: hidden; }
 .hero-background { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--ink); pointer-events: none; }
 .hero-background-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 47%; opacity: 0; transition: opacity 1.6s ease-in-out; }
 .hero-background-image.is-active { opacity: 1; }
 .hero-background-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse at 78% 48%, rgba(22,119,255,.12), transparent 34%), linear-gradient(90deg, rgba(8,8,8,.78) 0%, rgba(8,8,8,.5) 53%, rgba(8,8,8,.34) 100%), linear-gradient(0deg, rgba(8,8,8,.42), transparent 42%); }
 .hero::before { content: ""; position: absolute; z-index: 1; width: 720px; height: 720px; border: 1px solid rgba(22,119,255,.12); border-radius: 50%; top: -390px; left: 48%; pointer-events: none; }
 .hero::after { content: ""; position: absolute; z-index: 1; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 64px 64px; opacity: .45; mask-image: linear-gradient(90deg, transparent 35%, #000 100%); pointer-events: none; }
-.hero-grid { max-width: 1300px; margin: auto; min-height: 490px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; position: relative; z-index: 2; }
+.hero-grid { width: 100%; max-width: 1300px; flex: 1; margin: auto; min-height: 0; display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; position: relative; z-index: 2; }
 .hero-copy { padding: 0 0 31px; }
 .eyebrow, .section-kicker { margin: 0; font-size: 10px; letter-spacing: .17em; line-height: 1.5; font-weight: 700; }
 .eyebrow { color: var(--muted-dark); display: flex; align-items: center; gap: 9px; }
@@ -95,12 +95,12 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .hero-bottom { max-width: 1300px; min-height: 65px; margin: auto; position: relative; z-index: 2; display: flex; align-items: center; gap: 18px; border-top: 1px solid rgba(255,255,255,.16); color: var(--muted-dark); font-size: 9px; font-weight: 700; letter-spacing: .15em; }
 .hero-bottom-line { width: 35px; height: 1px; background: #5f5f5f; }
 
-.stats-strip { min-height: 108px; padding: 20px max(6.7vw, calc((100vw - 1300px) / 2)); display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; gap: 18px; border-bottom: 1px solid var(--line); background: var(--white); }
+.stats-strip { width: 100%; max-width: 1300px; min-height: 96px; margin: 0 auto; padding: 16px 0; display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; gap: 18px; position: relative; z-index: 2; border-top: 1px solid rgba(255,255,255,.2); background: transparent; color: var(--white); }
 .stat { display: flex; justify-content: center; align-items: center; gap: 13px; }
-.stat-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; color: var(--blue-deep); background: var(--mist); }
+.stat-icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; color: var(--blue); background: rgba(22,119,255,.14); }
 .stat strong, .stat small { display: block; }
-.stat strong { font: 700 13px "Manrope", sans-serif; }
-.stat small { color: var(--muted); font-size: 10px; margin-top: 4px; }
+.stat strong { color: var(--white); font: 700 13px "Manrope", sans-serif; }
+.stat small { color: var(--muted-dark); font-size: 10px; margin-top: 4px; }
 
 .section { max-width: 1300px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
 .about-section { padding-top: 106px; padding-bottom: 102px; }
@@ -109,6 +109,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .section-heading h2 span, .tracks-heading h2 span, .faq-heading h2 span { color: var(--blue-deep); }
 .about-content { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; padding: 34px 0 51px; }
 .about-lead { max-width: 390px; margin: 0; font: 600 21px/1.55 "Manrope", sans-serif; letter-spacing: -.025em; }
+.powered-by-highlight { color: var(--blue-deep); font-size: 1.15em; font-weight: 800; }
 .about-detail { max-width: 560px; }
 .about-detail p { color: var(--muted); font-size: 13px; line-height: 1.9; margin: 0 0 17px; }
 .inline-link { display: inline-flex; align-items: center; gap: 8px; border: 0; padding: 0; color: var(--blue-deep); background: transparent; font-size: 12px; font-weight: 700; }
@@ -204,7 +205,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .course-followup-layout { max-width: 1600px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr); align-items: stretch; }
 .course-followup-content { min-width: 0; }
 .course-registration-rail { min-width: 0; background: transparent; }
-.enquiry-section { position: sticky; top: 88px; display: grid; gap: 14px; padding: 22px 18px; scroll-margin-top: 88px; }
+.enquiry-section { position: sticky; top: 88px; align-self: start; max-height: calc(100vh - 108px); max-height: calc(100svh - 108px); overflow-y: auto; display: grid; gap: 14px; padding: 22px 18px; scroll-margin-top: 88px; }
 .enquiry-form { min-height: 0; padding: 20px 17px; background: var(--white); border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 18px 48px #0808080b; }
 .form-heading span { color: var(--blue-deep); font-size: 9px; font-weight: 700; letter-spacing: .16em; }
 .form-heading h3 { margin: 7px 0 3px; font: 700 22px "Manrope", sans-serif; letter-spacing: -.04em; }
@@ -307,7 +308,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .journey-content { gap: 55px; }
   .faq-section { gap: 50px; }
   .course-followup-layout { grid-template-columns: 1fr; }
-  .enquiry-section { position: static; max-width: 900px; margin: 0 auto; padding: 38px 28px; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: start; gap: 20px; }
+  .enquiry-section { position: static; max-width: 900px; max-height: none; margin: 0 auto; padding: 38px 28px; overflow: visible; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: start; gap: 20px; }
   .audience-card { padding-top: 18px; }
   .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 46px; }
 }
@@ -323,7 +324,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .main-nav.open { display: flex; }
   .main-nav > a { padding: 13px 2px; border-bottom: 1px solid #333333; }
   .button-nav { margin-top: 14px; }
-  .hero { padding: 46px 22px 0; }
+  .hero { min-height: 0; display: block; padding: 46px 22px 0; }
   .hero-background-image { object-position: center; }
   .hero-background-overlay { background: linear-gradient(90deg, rgba(8,8,8,.78) 0%, rgba(8,8,8,.52) 100%), linear-gradient(0deg, rgba(8,8,8,.42), transparent 42%); }
   .hero-grid { grid-template-columns: 1fr; gap: 0; }
@@ -338,9 +339,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .chip-bottom { left: 0; bottom: 47px; }
   .hero-bottom { min-height: 59px; gap: 9px; font-size: 7px; letter-spacing: .1em; }
   .hero-bottom-line { width: 15px; }
-  .stats-strip { padding: 20px 21px; grid-template-columns: repeat(2, 1fr); gap: 20px 7px; }
+  .stats-strip { min-height: 0; padding: 20px 0; grid-template-columns: repeat(2, 1fr); gap: 20px 7px; border-top: 0; border-bottom: 1px solid var(--line); background: var(--white); color: var(--ink); }
   .stat { justify-content: flex-start; gap: 9px; }
-  .stat-icon { width: 32px; height: 32px; }
+  .stat-icon { width: 32px; height: 32px; color: var(--blue-deep); background: var(--mist); }
+  .stat strong { color: var(--ink); }
   .stat strong { font-size: 11px; }
   .stat small { font-size: 8px; }
   .section { padding-left: 22px; padding-right: 22px; }
@@ -415,9 +417,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .footer-course-note { margin-top: 32px; padding: 17px; }
   .footer-watermark { margin-top: 34px; font-size: 12vw; }
   .footer-bottom-row { align-items: flex-start; flex-direction: column; gap: 10px; padding-bottom: 18px; }
-}
-@media (max-height: 850px) and (min-width: 901px) {
-  .enquiry-section { position: static; }
 }
 @media (max-width: 380px) {
   .hero-bottom { font-size: 6px; gap: 6px; }

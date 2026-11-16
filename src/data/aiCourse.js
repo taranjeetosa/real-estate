@@ -90,7 +90,7 @@ export const courseBenefits = [
   {
     title: "Get recognised",
     description:
-      "Earn a CampusSeat-issued certificate when you complete your programme.",
+      "Earn a certificate from CampusSeat, the certifying authority, when you complete your programme.",
     icon: BadgeCheck,
   },
 ];
@@ -109,7 +109,7 @@ export const courseFaqs = [
   {
     question: "Who issues the certificate?",
     answer:
-      "CampusSeat issues a certificate recognising applied AI competency when you complete your chosen programme.",
+      "CampusSeat is the certifying authority and issues a certificate recognising your applied AI competency when you complete your chosen programme.",
   },
   {
     question: "Can I take more than one track?",
@@ -133,6 +133,6 @@ export const learningSteps = [
   },
   {
     title: "Earn your certificate",
-    description: "Complete your track and receive CampusSeat certification.",
+    description: "Complete your track and receive a certificate from CampusSeat, the certifying authority.",
   },
 ];

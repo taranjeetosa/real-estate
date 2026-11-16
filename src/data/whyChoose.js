@@ -18,7 +18,7 @@ export const whyChooseReasons = [
   },
   {
     title: "Certified by CampusSeat",
-    description: "Every completed programme carries a CampusSeat-issued certification.",
+    description: "CampusSeat is the certifying authority and issues the certificate upon completion.",
     icon: ShieldCheck,
   },
   {

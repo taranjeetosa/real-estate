@@ -104,7 +104,7 @@ function AiCourseHero({ onGetStarted }) {
       <div className="hero-grid">
         <div className="hero-copy">
 
-          <h1>Make AI work<br />for <span>your work.</span></h1>
+          <h1>Elevate AI <br />for <span>your work.</span></h1>
           <p className="hero-description">
             Turn AI from a buzzword into a practical skill. Learn with real
             tools, build useful workflows and find the specialist track
@@ -143,6 +143,7 @@ function AiCourseHero({ onGetStarted }) {
           <div className="visual-star star-two">✳</div>
         </div>
       </div>
+      <CourseOverviewStats />
       <div className="hero-bottom">
         <span>ONE STOCK ACADEMY</span><span className="hero-bottom-line" /><span>EIGHT SPECIALIST TRACKS</span><span className="hero-bottom-line" /><span>BUILT AROUND YOU</span>
       </div>
@@ -661,7 +662,6 @@ export default function Home() {
       <Navbar links={navigationLinks} onGetStarted={() => goToEnquiry()} />
       <main>
         <AiCourseHero onGetStarted={() => goToEnquiry()} />
-        <CourseOverviewStats />
         <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
         <WhyChooseAcademy />
         <div className="course-followup-layout">
