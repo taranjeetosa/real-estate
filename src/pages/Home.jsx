@@ -573,6 +573,30 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
   );
 }
 
+function WhoThisIsForCard() {
+  const audiences = [
+    "Professionals in leadership, finance, accounting, audit, tax, sales and marketing",
+    "Healthcare and nursing professionals building applied AI skills",
+    "Real estate professionals applying AI to property and client work",
+    "Managers and team leads bringing AI into their departments",
+    "Anyone seeking practical AI skills without a technical background",
+  ];
+
+  return (
+    <section className="audience-card" aria-labelledby="audience-title">
+      <p className="audience-kicker">FIND YOUR PLACE</p>
+      <h3 id="audience-title">Who this is for</h3>
+      <h4>Target audience</h4>
+      <ul>
+        {audiences.map((audience) => <li key={audience}>{audience}</li>)}
+      </ul>
+      <p className="audience-certification">
+        <strong>Certification:</strong> Issued by CampusSeat upon completion.
+      </p>
+    </section>
+  );
+}
+
 function CourseEnrollmentCard({
   selectedTrack,
   onTrackChange,
@@ -590,6 +614,7 @@ function CourseEnrollmentCard({
           onReset={onReset}
         />
       </form>
+      <WhoThisIsForCard />
     </section>
   );
 }
