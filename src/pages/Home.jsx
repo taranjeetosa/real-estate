@@ -3,7 +3,10 @@ import {
   ArrowDown,
   ArrowRight,
   BadgeCheck,
+  BrainCircuit,
   Brain,
+  BriefcaseBusiness,
+  Calculator,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -11,6 +14,9 @@ import {
   Code2,
   Download,
   FileText,
+  House,
+  Megaphone,
+  Stethoscope,
   Sparkles,
   Target,
   X,
@@ -556,7 +562,7 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
 
   return (
     <>
-      <div className="form-heading"><span>REGISTER YOUR INTEREST</span><h3>Find your track</h3><p>Share a few details to get started.</p></div>
+      <div className="form-heading"><span>REGISTER YOUR INTEREST</span><h3>Show Interest</h3><p>Share a few details to get started.</p></div>
       <label htmlFor="full-name">Your name</label>
       <input id="full-name" name="name" type="text" autoComplete="name" placeholder="e.g. Alex Morgan" required />
       <label htmlFor="email">Email address</label>
@@ -575,11 +581,12 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
 
 function WhoThisIsForCard() {
   const audiences = [
-    "Professionals in leadership, finance, accounting, audit, tax, sales and marketing",
-    "Healthcare and nursing professionals building applied AI skills",
-    "Real estate professionals applying AI to property and client work",
-    "Managers and team leads bringing AI into their departments",
-    "Anyone seeking practical AI skills without a technical background",
+    { label: "Managers and team leads", icon: BriefcaseBusiness },
+    { label: "Finance, accounting, audit and tax professionals", icon: Calculator },
+    { label: "Sales and marketing professionals", icon: Megaphone },
+    { label: "Healthcare and nursing professionals", icon: Stethoscope },
+    { label: "Real estate professionals", icon: House },
+    { label: "Anyone seeking practical AI skills without a technical background", icon: BrainCircuit },
   ];
 
   return (
@@ -588,7 +595,12 @@ function WhoThisIsForCard() {
       <h3 id="audience-title">Who this is for</h3>
       <h4>Target audience</h4>
       <ul>
-        {audiences.map((audience) => <li key={audience}>{audience}</li>)}
+        {audiences.map(({ label, icon: AudienceIcon }) => (
+          <li key={label}>
+            <span className="audience-role-icon" aria-hidden="true"><AudienceIcon size={16} strokeWidth={1.8} /></span>
+            <span>{label}</span>
+          </li>
+        ))}
       </ul>
       <p className="audience-certification">
         <strong>Certification:</strong> Issued by CampusSeat upon completion.

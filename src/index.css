@@ -224,8 +224,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .audience-card h3 { margin: 0; color: #172a56; font: 700 20px/1.25 "Manrope", sans-serif; letter-spacing: -.035em; }
 .audience-card h4 { margin: 15px 0 8px; color: var(--ink); font: 700 12px/1.4 "Manrope", sans-serif; }
 .audience-card ul { display: grid; gap: 7px; margin: 0; padding: 0 0 15px; list-style: none; }
-.audience-card li { position: relative; padding-left: 12px; color: var(--muted); font-size: 10px; line-height: 1.55; }
-.audience-card li::before { position: absolute; top: .05em; left: 0; color: var(--blue); content: "•"; }
+.audience-card li { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 10px; line-height: 1.55; }
+.audience-role-icon { width: 29px; height: 29px; flex: 0 0 29px; display: grid; place-items: center; border: 1px solid rgba(36,78,216,.14); border-radius: 7px; background: #edf2ff; color: var(--blue-deep); }
 .audience-certification { margin: 0 -17px; padding: 12px 17px; border-left: 3px solid var(--blue); background: #eaf3ff; color: #315174; font-size: 10px; line-height: 1.55; }
 .audience-certification strong { color: #173c70; }
 
@@ -306,12 +306,13 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .tracks-grid { grid-template-columns: repeat(2, 1fr); }
   .journey-content { gap: 55px; }
   .faq-section { gap: 50px; }
-  .course-followup-layout { grid-template-columns: minmax(0, 2.5fr) minmax(250px, 1fr); }
+  .course-followup-layout { grid-template-columns: 1fr; }
+  .enquiry-section { position: static; max-width: 900px; margin: 0 auto; padding: 38px 28px; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: start; gap: 20px; }
+  .audience-card { padding-top: 18px; }
   .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 46px; }
 }
 @media (max-width: 900px) {
   .course-followup-layout { grid-template-columns: 1fr; }
-  .enquiry-section { position: static; max-width: 620px; margin: 0 auto; padding: 38px 28px; }
 }
 @media (max-width: 700px) {
   html { scroll-padding-top: 70px; }
@@ -395,7 +396,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .faq-item > p { font-size: 10px; }
   .course-followup-layout { grid-template-columns: 1fr; }
   .course-registration-rail { border: 0; background: transparent; }
-  .enquiry-section { position: static; max-width: 560px; margin: 0 auto; padding: 35px 22px; }
+  .enquiry-section { position: static; max-width: 560px; margin: 0 auto; padding: 35px 22px; grid-template-columns: 1fr; gap: 14px; }
   .enquiry-form { padding: 22px 18px; }
   .audience-card { padding: 17px 16px 0; }
   .audience-card h3 { font-size: 19px; }
