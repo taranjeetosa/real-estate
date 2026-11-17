@@ -217,6 +217,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .enquiry-form input::placeholder { color: var(--muted); }
 .form-submit { width: 100%; margin-top: 15px; min-height: 43px; }
 .form-note { color: var(--muted); font-size: 9px; line-height: 1.6; text-align: center; margin: 11px 0 0; }
+.form-error { margin: 11px 0 0; color: var(--error); font-size: 10px; line-height: 1.5; }
 .form-success { min-height: 330px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
 .success-icon { width: 44px; height: 44px; display: grid; place-items: center; color: var(--sage); background: var(--mist); border-radius: 50%; }
 .form-success h3 { margin: 19px 0 7px; font: 700 22px "Manrope", sans-serif; }
@@ -265,9 +266,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .back-top:hover { color: var(--white); }
 .back-top svg { transform: rotate(-45deg); }
 .footer-bottom { grid-column: 1/-1; display: flex; justify-content: space-between; padding: 16px 0; margin-top: 14px; border-top: 1px solid #333333; color: var(--muted-dark); font-size: 9px; }
-.scroll-to-top { position: fixed; right: 20px; bottom: 20px; z-index: 30; width: 42px; height: 42px; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--blue-deep); color: var(--white); box-shadow: 0 5px 20px #08080830; }
-.scroll-to-top:hover { background: var(--blue); }
-
 .academy-footer { position: relative; overflow: hidden; border-top: 1px solid rgba(255,255,255,.12); background: var(--ink); color: var(--white); }
 .footer-slashes { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .footer-slashes::before, .footer-slashes::after { content: ""; position: absolute; top: -20%; height: 160%; transform: skewX(-22deg); background: rgba(255,255,255,.025); }

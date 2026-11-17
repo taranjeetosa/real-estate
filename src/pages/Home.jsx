@@ -17,7 +17,8 @@ import {
 } from "lucide-react";
 import Footer from "../components/Footer.jsx";
 import Navbar from "../components/Navbar.jsx";
-import ScrollToTop from "../components/ScrollToTop.jsx";
+import LeadPopup from "../components/LeadPopup.jsx";
+import useLeadSheetSubmission from "../hooks/useLeadSheetSubmission.js";
 import {
   courseBenefits,
   courseFaqs,
@@ -442,13 +443,20 @@ function CourseFaq() {
   );
 }
 
-function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
+function InterestForm({
+  selectedTrack,
+  onTrackChange,
+  sending,
+  submitted,
+  error,
+  onReset,
+}) {
   if (submitted) {
     return (
       <div className="form-success" role="status">
         <span className="success-icon"><Check size={24} /></span>
         <h3>Thanks for your interest.</h3>
-        <p>This frontend demo does not send or store your details. Connect a form service to receive enquiries.</p>
+        <p>Your details have been added to our enquiry list. One Stock Academy will be in touch.</p>
         <button className="inline-link" type="button" onClick={onReset}>Submit another enquiry <ArrowRight size={15} /></button>
       </div>
     );
@@ -467,8 +475,10 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
       <select id="track" name="track" value={selectedTrack} onChange={(event) => onTrackChange(event.target.value)}>
         {specialistTracks.map((track) => <option key={track.title} value={track.title}>{track.title}</option>)}
       </select>
-      <button className="button button-primary form-submit" type="submit">Enquire about this tier <ArrowRight size={17} /></button>
-      
+      <button className="button button-primary form-submit" type="submit" disabled={sending}>
+        {sending ? "Sending..." : "Enquire about this pathway"} <ArrowRight size={17} />
+      </button>
+      {error && <p className="form-error" role="alert">{error}</p>}
     </>
   );
 }
@@ -504,21 +514,48 @@ function WhoThisIsForCard() {
 function CourseEnrollmentCard({
   selectedTrack,
   onTrackChange,
-  submitted,
-  onSubmit,
-  onReset,
 }) {
+  const formRef = useRef(null);
+  const responseFrameRef = useRef(null);
+  const requestIdInputRef = useRef(null);
+  const {
+    actionUrl,
+    handleSubmit,
+    resetSubmission,
+    sending,
+    submitted,
+    error,
+  } = useLeadSheetSubmission({ formRef, responseFrameRef, requestIdInputRef });
+
   return (
     <section className="enquiry-section" id="enquire" aria-label="Register your interest">
-      <form className="enquiry-form" onSubmit={onSubmit}>
+      <form
+        ref={formRef}
+        className="enquiry-form"
+        action={actionUrl}
+        method="post"
+        target="show-interest-sheet-response"
+        onSubmit={handleSubmit}
+      >
+        <input ref={requestIdInputRef} name="requestId" type="hidden" />
+        <input name="source" type="hidden" value="show-interest-form" />
+        <input name="website" type="text" tabIndex={-1} autoComplete="off" hidden />
         <InterestForm
           selectedTrack={selectedTrack}
           onTrackChange={onTrackChange}
+          sending={sending}
           submitted={submitted}
-          onReset={onReset}
+          error={error}
+          onReset={resetSubmission}
         />
       </form>
       <WhoThisIsForCard />
+      <iframe
+        ref={responseFrameRef}
+        className="lead-popup-response-frame"
+        name="show-interest-sheet-response"
+        title="Show interest submission response"
+      />
     </section>
   );
 }
@@ -526,7 +563,6 @@ function CourseEnrollmentCard({
 export default function Home() {
   const [selectedTrack, setSelectedTrack] = useState(specialistTracks[0].title);
   const [activeTrack, setActiveTrack] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
   const closeTrackModal = useCallback(() => setActiveTrack(null), []);
 
   function goToEnquiry(track) {
@@ -540,11 +576,6 @@ export default function Home() {
   function openTrackSyllabus(track) {
     setSelectedTrack(track);
     setActiveTrack(track);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    setSubmitted(true);
   }
 
   return (
@@ -565,15 +596,12 @@ export default function Home() {
             <CourseEnrollmentCard
               selectedTrack={selectedTrack}
               onTrackChange={setSelectedTrack}
-              submitted={submitted}
-              onSubmit={handleSubmit}
-              onReset={() => setSubmitted(false)}
             />
           </aside>
         </div>
       </main>
       <Footer />
-      <ScrollToTop />
+      <LeadPopup />
       <TrackSyllabusModal
         track={activeTrack}
         onClose={closeTrackModal}
