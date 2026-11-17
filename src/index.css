@@ -45,6 +45,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .button:hover { transform: translateY(-2px); }
 .button-nav { background: var(--blue-deep); color: var(--white); padding: 11px 15px; }
 .button-nav:hover, .button-primary:hover { background: var(--blue); color: var(--ink); }
+.button-nav:hover, .form-submit:hover { background: #1d3fb8; color: var(--white); }
 .menu-toggle { display: none; }
 
 .hero { min-height: calc(100vh - 72px); min-height: calc(100svh - 72px); display: flex; flex-direction: column; background: var(--ink); color: var(--white); padding: 34px max(6.7vw, calc((100vw - 1300px) / 2)) 0; position: relative; overflow: hidden; }
