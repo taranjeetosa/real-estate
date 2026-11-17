@@ -196,6 +196,18 @@ function AiAcademyOverview({ onGetStarted }) {
 function AlumniGallery() {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((currentIndex) => (currentIndex + 1) % alumniImages.length);
+    }, 3500);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
+
   function showImage(direction) {
     setActiveIndex((currentIndex) =>
       (currentIndex + direction + alumniImages.length) % alumniImages.length,
@@ -387,7 +399,7 @@ function TestimonialsCarousel() {
                       <>
                         <iframe
                           className="testimonial-video"
-                          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&controls=1&rel=0`}
+                          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&controls=0&rel=0`}
                           title={`${name}'s One Stock Academy testimonial`}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
