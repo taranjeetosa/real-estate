@@ -153,18 +153,41 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .testimonial-arrow { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid rgba(22,119,255,.55); border-radius: 50%; background: rgba(255,255,255,.035); color: var(--white); transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
 .testimonial-arrow:hover { border-color: var(--blue); background: var(--blue); color: var(--white); }
 .testimonial-arrow:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-.testimonial-viewport { position: relative; overflow-x: auto; overflow-y: hidden; width: 100%; padding: 4px 0 12px; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%); }
+.testimonial-viewport { position: relative; overflow-x: auto; overflow-y: hidden; width: 100%; padding: 4px 0 12px; scrollbar-width: none; overscroll-behavior-x: contain; }
 .testimonial-viewport::-webkit-scrollbar { display: none; }
-.testimonial-track { position: relative; display: flex; width: max-content; }
-.testimonial-group { display: flex; flex: 0 0 auto; align-items: stretch; gap: 14px; padding-right: 14px; }
-.testimonial-card { width: clamp(340px, 34vw, 390px); min-height: 290px; display: flex; flex: 0 0 auto; flex-direction: column; padding: 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 11px; background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); }
-.testimonial-mark { height: 29px; color: var(--blue); font: 700 43px/.9 Georgia, serif; }
-.testimonial-quote { flex: 1; margin: 12px 0 20px; color: #e0e2e7; font-size: 14px; line-height: 1.75; }
-.testimonial-author { display: flex; align-items: center; gap: 11px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,.12); }
-.testimonial-author img { width: 68px; height: 68px; flex: 0 0 68px; border: 2px solid rgba(22,119,255,.55); border-radius: 50%; background: #1d2735; object-fit: cover; }
-.testimonial-author h4 { margin: 0 0 3px; color: var(--white); font: 700 11px/1.4 "Manrope", sans-serif; }
-.testimonial-author p { margin: 0; color: #a4a9b3; font-size: 9px; line-height: 1.4; }
-.testimonials-empty { margin: 0; padding: 22px; border: 1px solid rgba(255,255,255,.1); border-radius: 10px; color: #b6b6b6; font-size: 12px; }
+.testimonial-track { display: flex; width: max-content; }
+.testimonial-group { display: flex; width: max-content; align-items: stretch; gap: 16px; padding-right: 16px; }
+.testimonial-card { position: relative; isolation: isolate; width: min(78vw, 280px); height: 440px; flex: 0 0 min(78vw, 280px); overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-radius: 16px; background: #141414; }
+.testimonial-poster, .testimonial-overlay, .testimonial-video { position: absolute; inset: 0; width: 100%; height: 100%; }
+.testimonial-poster { object-fit: cover; object-position: center top; }
+.testimonial-overlay { background: linear-gradient(180deg, rgba(8,8,8,.08) 18%, rgba(8,8,8,.34) 48%, rgba(8,8,8,.96) 100%); pointer-events: none; }
+.testimonial-card-content { position: absolute; right: 0; bottom: 0; left: 0; padding: 20px 19px 18px; }
+.testimonial-card-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.testimonial-kicker { margin: 0; color: rgba(255,255,255,.72); font-size: 9px; font-weight: 700; letter-spacing: .14em; }
+.testimonial-name { margin: 5px 0 2px; color: var(--white); font: 700 19px/1.2 "Manrope", sans-serif; }
+.testimonial-role { margin: 0; color: rgba(255,255,255,.76); font-size: 11px; line-height: 1.4; }
+.testimonial-play { display: grid; width: 48px; height: 48px; flex: 0 0 48px; place-items: center; border: 1px solid var(--blue); border-radius: 50%; background: rgba(255,255,255,.1); color: var(--white); backdrop-filter: blur(8px); transition: background-color .2s ease, color .2s ease, transform .2s ease; }
+.testimonial-play:hover { transform: scale(1.06); background: var(--white); color: var(--ink); }
+.testimonial-play:focus-visible, .testimonial-video-close:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.testimonial-quote { display: -webkit-box; overflow: hidden; margin: 13px 0 0; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.17); color: rgba(255,255,255,.76); font-size: 11px; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
+.testimonial-video { border: 0; background: #080808; }
+.testimonial-video-close { position: absolute; top: 12px; right: 12px; z-index: 1; display: grid; width: 36px; height: 36px; place-items: center; border: 1px solid rgba(255,255,255,.28); border-radius: 50%; background: rgba(8,8,8,.72); color: var(--white); }
+
+.alumni-section { overflow: hidden; padding: 30px 0 30px; background: var(--paper); color: var(--ink); }
+.alumni-title { max-width: 1300px; margin: 0 auto 40px; padding: 0 32px; color: var(--ink); font: 700 clamp(35px, 4vw, 49px)/1.14 "Manrope", sans-serif; letter-spacing: -.055em; }
+.alumni-title span { color: var(--blue-deep); }
+.alumni-viewport { position: relative; overflow: hidden; width: 100%; height: clamp(280px, 45vw, 680px); }
+.alumni-track { position: relative; width: 100%; height: 100%; }
+.alumni-card { position: absolute; top: 50%; left: 50%; z-index: 1; width: min(92vw, 1600px); height: 100%; overflow: hidden; border-radius: 12px; background: #dedede; opacity: .76; transform: translate(-50%, -50%) scale(.72); transition: left .55s cubic-bezier(.22,.75,.24,1), opacity .55s ease, transform .55s cubic-bezier(.22,.75,.24,1); }
+.alumni-card-previous { left: calc(50% - 70vw); }
+.alumni-card-next { left: calc(50% + 70vw); }
+.alumni-card-active { z-index: 2; left: 50%; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.alumni-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.alumni-controls { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 20px; }
+.alumni-arrow { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid rgba(8,8,8,.32); border-radius: 50%; background: transparent; color: var(--ink); transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.alumni-arrow:hover { border-color: var(--ink); background: var(--ink); color: var(--white); }
+.alumni-arrow:focus-visible { outline: 2px solid var(--blue-deep); outline-offset: 3px; }
+.alumni-counter { min-width: 48px; color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; text-align: center; }
 
 .tracks-section { padding: 62px 0 52px;  }
 .tracks-heading { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 26px; }
@@ -353,7 +376,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .section-heading h2, .tracks-heading h2, .faq-heading h2 { font-size: 35px; }
   .why-section { padding: 66px 0; }
   .why-inner { padding: 0 22px; gap: 31px; }
-  .why-left { display: flex; gap: 25px; }
+  .why-left { display: flex; flex-direction: column; gap: 25px; }
   .why-heading h2 { font-size: 38px; }
   .why-actions { flex-direction: row; flex-wrap: wrap; gap: 15px 20px; margin-top: 22px; }
   .why-grid { grid-template-columns: 1fr; }
@@ -361,10 +384,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .why-card { padding: 12px; }
   .why-card h3 { font-size: 13px; }
   .why-card p { font-size: 11px; }
-  .testimonials-heading { align-items: flex-start; }
+  .testimonials-heading { align-items: center; }
   .testimonials-heading h3 { font-size: 22px; }
-  .testimonial-card { width: min(calc(100vw - 60px), 380px); min-height: 270px; padding: 19px; }
-  .testimonial-author img { width: 60px; height: 60px; flex-basis: 60px; }
+  .testimonial-card { width: min(calc(100vw - 72px), 280px); height: 420px; flex-basis: min(calc(100vw - 72px), 280px); }
+  .testimonial-card-content { padding: 18px; }
+  .alumni-section { padding: 30px 0 36px; }
+  .alumni-title { margin-bottom: 22px; padding: 0 22px; }
+  .alumni-viewport { height: clamp(240px, 66vw, 440px); }
+  .alumni-card { width: min(82vw, 1280px); }
   .about-content { grid-template-columns: 1fr; gap: 16px; padding: 22px 0 31px; }
   .about-lead { font-size: 18px; }
   .about-detail p { font-size: 12px; }

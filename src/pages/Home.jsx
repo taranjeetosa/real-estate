@@ -2,17 +2,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
-  BookOpen,
+  ChevronLeft,
+  ChevronRight,
   Check,
   Clock3,
   FileText,
   House,
   Megaphone,
+  Play,
   Sparkles,
   Target,
   BriefcaseBusiness,
   Users,
-  Video,
   X,
 } from "lucide-react";
 import Footer from "../components/Footer.jsx";
@@ -25,6 +26,8 @@ import {
   learningSteps,
   specialistTracks,
 } from "../data/aiCourse.js";
+import alumniImages from "../data/alumni.js";
+import testimonials from "../data/testimonials.js";
 import { whyChooseReasons } from "../data/whyChoose.js";
 
 const navigationLinks = [
@@ -94,7 +97,7 @@ function AiCourseHero({ onGetStarted }) {
       <div className="hero-grid">
         <div className="hero-copy">
           <p className="eyebrow hero-eyebrow">REAL ESTATE CAREER IN DUBAI</p>
-          <h1>AI for real<br /><span>estate work.</span></h1>
+          <h1>Turn AI<br />for <span>Real Estate.</span></h1>
           <p className="hero-description">
             Build practical skills in property data, AI-supported marketing,
             and market intelligence through three real estate learning pathways.
@@ -190,49 +193,242 @@ function AiAcademyOverview({ onGetStarted }) {
   );
 }
 
-function ProgramFormats() {
-  const formats = [
-    {
-      icon: Video,
-      title: "Video lessons",
-      description: "Interactive lessons and case scenarios rooted in property work.",
-    },
-    {
-      icon: Users,
-      title: "Live expert sessions",
-      description: "Join live sessions and masterclasses with industry context.",
-    },
-    {
-      icon: BookOpen,
-      title: "Webinars & tool practice",
-      description: "Explore industry webinars and a sandbox for real estate tools.",
-    },
-  ];
+function AlumniGallery() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  function showImage(direction) {
+    setActiveIndex((currentIndex) =>
+      (currentIndex + direction + alumniImages.length) % alumniImages.length,
+    );
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "ArrowLeft") showImage(-1);
+    if (event.key === "ArrowRight") showImage(1);
+  }
+
+  return (
+    <section className="alumni-section" id="alumni" aria-labelledby="alumni-title">
+      <h2 className="alumni-title" id="alumni-title">Our Alum<span>ni</span></h2>
+      <div
+        className="alumni-viewport"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Our Alumni"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      >
+        <div className="alumni-track">
+          {[-1, 0, 1].map((offset) => {
+            const imageIndex =
+              (activeIndex + offset + alumniImages.length) % alumniImages.length;
+            const { id, image } = alumniImages[imageIndex];
+            const position = offset === 0 ? "active" : offset < 0 ? "previous" : "next";
+
+            return (
+              <article
+                className={`alumni-card alumni-card-${position}`}
+                key={id}
+                aria-hidden={offset !== 0}
+                aria-roledescription="slide"
+                aria-label={`${imageIndex + 1} of ${alumniImages.length}`}
+              >
+                <img
+                  src={image}
+                  alt={offset === 0 ? "One Stock Academy alumni group" : ""}
+                />
+              </article>
+            );
+          })}
+        </div>
+      </div>
+      <div className="alumni-controls" aria-label="Alumni gallery navigation">
+        <button
+          className="alumni-arrow"
+          type="button"
+          aria-label="Previous alumni photo"
+          onClick={() => showImage(-1)}
+        >
+          <ChevronLeft size={17} />
+        </button>
+        <span className="alumni-counter" aria-live="polite">
+          {String(activeIndex + 1).padStart(2, "0")} / {String(alumniImages.length).padStart(2, "0")}
+        </span>
+        <button
+          className="alumni-arrow"
+          type="button"
+          aria-label="Next alumni photo"
+          onClick={() => showImage(1)}
+        >
+          <ChevronRight size={17} />
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function TestimonialsCarousel() {
+  const viewportRef = useRef(null);
+  const trackRef = useRef(null);
+  const resumeTimerRef = useRef(null);
+  const [paused, setPaused] = useState(false);
+  const [playingTestimonial, setPlayingTestimonial] = useState(null);
+  const publishedTestimonials = testimonials
+    .filter(({ published }) => published)
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (
+      !viewport ||
+      !track ||
+      paused ||
+      playingTestimonial !== null ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) return undefined;
+
+    let frame = 0;
+    const scrollContinuously = () => {
+      const loopPoint = track.children[1]?.offsetLeft || 0;
+      if (loopPoint > 0) {
+        viewport.scrollLeft += 0.5;
+        if (viewport.scrollLeft >= loopPoint) viewport.scrollLeft -= loopPoint;
+      }
+      frame = requestAnimationFrame(scrollContinuously);
+    };
+
+    frame = requestAnimationFrame(scrollContinuously);
+    return () => cancelAnimationFrame(frame);
+  }, [paused, playingTestimonial]);
+
+  useEffect(() => () => {
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+  }, []);
+
+  function pauseBriefly() {
+    setPaused(true);
+    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    resumeTimerRef.current = window.setTimeout(() => {
+      setPaused(false);
+      resumeTimerRef.current = null;
+    }, 1200);
+  }
+
+  function scrollTestimonials(direction) {
+    const viewport = viewportRef.current;
+    const card = viewport?.querySelector(".testimonial-card");
+    if (!viewport || !card) return;
+
+    pauseBriefly();
+    viewport.scrollBy({
+      left: direction * (card.getBoundingClientRect().width + 16),
+      behavior: "smooth",
+    });
+  }
 
   return (
     <div className="testimonials-panel">
       <div className="testimonials-heading">
         <div>
-          <p className="why-kicker">HOW YOU LEARN</p>
-          <h3>Learning built around practice.</h3>
+          <p className="why-kicker">STUDENT STORIES</p>
+          <h3>Learner experiences.</h3>
+        </div>
+        <div className="testimonial-controls">
+          <button
+            className="testimonial-arrow"
+            type="button"
+            aria-label="Scroll testimonials left"
+            onClick={() => scrollTestimonials(-1)}
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            className="testimonial-arrow"
+            type="button"
+            aria-label="Scroll testimonials right"
+            onClick={() => scrollTestimonials(1)}
+          >
+            <ChevronRight size={18} />
+          </button>
         </div>
       </div>
 
       <div
+        ref={viewportRef}
         className="testimonial-viewport"
         role="region"
-        aria-label="Programme learning formats"
+        aria-label="One Stock Academy testimonials"
         tabIndex={0}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={pauseBriefly}
+        onFocusCapture={() => setPaused(true)}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
+        }}
       >
-        <div className="testimonial-group">
-          {formats.map(({ icon: Icon, title, description }) => (
-            <article className="testimonial-card" key={title}>
-              <span className="testimonial-mark" aria-hidden="true"><Icon size={22} /></span>
-              <p className="testimonial-quote">{title}</p>
-              <div className="testimonial-author">
-                <p>{description}</p>
-              </div>
-            </article>
+        <div className="testimonial-track" ref={trackRef}>
+          {[0, 1].map((copyIndex) => (
+            <div
+              className="testimonial-group"
+              key={`testimonial-group-${copyIndex}`}
+              aria-hidden={copyIndex > 0}
+              inert={copyIndex > 0}
+            >
+              {publishedTestimonials.map(({ id, name, role, text, image, videoId }) => {
+                const isPlaying =
+                  playingTestimonial?.id === id && playingTestimonial.copyIndex === copyIndex;
+
+                return (
+                  <article className="testimonial-card" key={`${id}-${copyIndex}`}>
+                    {isPlaying ? (
+                      <>
+                        <iframe
+                          className="testimonial-video"
+                          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&controls=1&rel=0`}
+                          title={`${name}'s One Stock Academy testimonial`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                        <button
+                          className="testimonial-video-close"
+                          type="button"
+                          aria-label={`Close ${name}'s video`}
+                          onClick={() => setPlayingTestimonial(null)}
+                        >
+                          <X size={18} />
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <img className="testimonial-poster" src={image} alt="" loading="lazy" />
+                        <div className="testimonial-overlay" aria-hidden="true" />
+                        <div className="testimonial-card-content">
+                          <div className="testimonial-card-heading">
+                            <div>
+                              <p className="testimonial-kicker">ONE STOCK ACADEMY</p>
+                              <h4 className="testimonial-name">{name}</h4>
+                              <p className="testimonial-role">{role}</p>
+                            </div>
+                            <button
+                              className="testimonial-play"
+                              type="button"
+                              aria-label={`Play ${name}'s testimonial`}
+                              onClick={() => setPlayingTestimonial({ id, copyIndex })}
+                            >
+                              <Play size={18} fill="currentColor" />
+                            </button>
+                          </div>
+                          <p className="testimonial-quote">{text}</p>
+                        </div>
+                      </>
+                    )}
+                  </article>
+                );
+              })}
+            </div>
           ))}
         </div>
       </div>
@@ -274,8 +470,7 @@ function WhyChooseAcademy() {
             ))}
           </div>
         </div>
-
-        <ProgramFormats />
+        <TestimonialsCarousel />
       </div>
     </section>
   );
@@ -585,6 +780,7 @@ export default function Home() {
       <main>
         <AiCourseHero onGetStarted={() => goToEnquiry()} />
         <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
+        <AlumniGallery />
         <WhyChooseAcademy />
         <div className="course-followup-layout">
           <div className="course-followup-content">
