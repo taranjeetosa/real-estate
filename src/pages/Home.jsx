@@ -93,7 +93,7 @@ function AiCourseHero({ onGetStarted }) {
       <HeroBackgroundSlideshow />
       <div className="hero-grid">
         <div className="hero-copy">
-
+          <p className="eyebrow hero-eyebrow">REAL ESTATE CAREER IN DUBAI</p>
           <h1>AI for real<br /><span>estate work.</span></h1>
           <p className="hero-description">
             Build practical skills in property data, AI-supported marketing,

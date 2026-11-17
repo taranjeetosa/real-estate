@@ -58,6 +58,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
 .hero-copy { padding: 0 0 31px; }
 .eyebrow, .section-kicker { margin: 0; font-size: 10px; letter-spacing: .17em; line-height: 1.5; font-weight: 700; }
 .eyebrow { color: var(--muted-dark); display: flex; align-items: center; gap: 9px; }
+.hero-eyebrow { color: var(--blue); }
 .eyebrow-dot, .live-dot { height: 7px; width: 7px; background: var(--blue); border-radius: 50%; box-shadow: 0 0 12px rgba(22,119,255,.6); }
 .eyebrow-divider { opacity: .45; }
 .hero h1, .section h2, .journey-content h2, .enquiry-copy h2 { font-family: "Manrope", sans-serif; font-weight: 700; letter-spacing: -.055em; }
@@ -341,10 +342,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible, select:focus-visib
   .chip-bottom { left: 0; bottom: 47px; }
   .hero-bottom { min-height: 59px; gap: 9px; font-size: 7px; letter-spacing: .1em; }
   .hero-bottom-line { width: 15px; }
-  .stats-strip { min-height: 0; padding: 20px 0; grid-template-columns: repeat(2, 1fr); gap: 20px 7px; border-top: 0; border-bottom: 1px solid var(--line); background: var(--white); color: var(--ink); }
+  .stats-strip { min-height: 0; padding: 20px 0; grid-template-columns: repeat(2, 1fr); gap: 20px 7px; border-top: 0; border-bottom: 1px solid rgba(255,255,255,.2); background: transparent; color: var(--white); }
   .stat { justify-content: flex-start; gap: 9px; }
   .stat-icon { width: 32px; height: 32px; color: var(--blue-deep); background: var(--mist); }
-  .stat strong { color: var(--ink); }
+  .stat strong { color: var(--white); }
   .stat strong { font-size: 11px; }
   .stat small { font-size: 8px; }
   .section { padding-left: 22px; padding-right: 22px; }

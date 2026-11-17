@@ -15,7 +15,7 @@
 .lead-popup { position: absolute; right: 0; bottom: 70px; width: min(390px, calc(100vw - 32px)); max-height: calc(100vh - 110px); max-height: calc(100dvh - 110px); display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: var(--white); color: var(--ink); box-shadow: 0 28px 80px rgba(0,0,0,.45); transform-origin: bottom right; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(24px) scale(.94); transition: transform .32s cubic-bezier(.2,.9,.3,1), opacity .25s ease, visibility 0s linear .32s; }
 .lead-popup.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); transition: transform .38s cubic-bezier(.2,.9,.3,1.15), opacity .25s ease, visibility 0s linear 0s; }
 
-.lead-popup-head { position: relative; flex: 0 0 auto; padding: 24px 24px 21px; background: radial-gradient(ellipse at 90% 0%, rgba(22,119,255,.22), transparent 55%), var(--ink); color: var(--white); border-top: 2px solid var(--blue); border-bottom: 2px solid var(--blue-deep); }
+.lead-popup-head { position: relative; flex: 0 0 auto; padding: 24px 24px 21px; background: radial-gradient(ellipse at 90% 0%, rgba(22,119,255,.22), transparent 55%), var(--ink); color: var(--white); border-bottom: 2px solid var(--blue-deep); }
 .lead-popup-kicker { margin: 0 0 8px; color: var(--blue); font-size: 9px; font-weight: 700; letter-spacing: .17em; }
 .lead-popup-head h2 { margin: 0 34px 8px 0; font: 700 21px/1.25 "Manrope", sans-serif; letter-spacing: -.04em; }
 .lead-popup-sub { margin: 0; color: var(--muted-dark); font-size: 12px; line-height: 1.65; }
