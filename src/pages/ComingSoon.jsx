@@ -9,32 +9,32 @@ const EASE = [0.22, 1, 0.36, 1];
 const EXPECT = [
   {
     icon: BookOpen,
-    title: "Structured lessons",
-    text: "A clear step-by-step path, from fundamentals to confident execution.",
+    title: "Property intelligence",
+    text: "Build practical capability in property data and predictive market trends.",
   },
   {
     icon: LineChart,
-    title: "Real market examples",
-    text: "Learn from live charts and practical setups, not just theory.",
+    title: "AI-supported marketing",
+    text: "Explore campaign workflows for attracting, converting, and retaining clients.",
   },
   {
     icon: Users,
-    title: "Guided support",
-    text: "Mentor-led learning so your questions never go unanswered.",
+    title: "Expert-led learning",
+    text: "Learn through live sessions, masterclasses, webinars, and tool practice.",
   },
 ];
 
 const PROGRESS = [
-  { label: "Curriculum planned", done: true },
-  { label: "Lessons being prepared", done: true },
-  { label: "Final review", done: false },
+  { label: "Professional tier", done: true },
+  { label: "Manager and Expert tiers", done: true },
+  { label: "OneX Properties internship assistance", done: false },
 ];
 
 const BARS = [34, 52, 43, 68, 56, 76, 61, 88, 70, 96, 78, 100];
 
 export default function ComingSoon() {
   const [searchParams] = useSearchParams();
-  const topic = searchParams.get("topic") || "Trading education";
+  const topic = searchParams.get("topic") || "AI-powered real estate training";
   const reduce = useReducedMotion();
 
   const rise = (delay = 0) => ({
@@ -71,7 +71,7 @@ export default function ComingSoon() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
-                One Stock Academy <span className="text-white/30">/</span> Coming soon
+                One Stock Academy <span className="text-white/30">/</span> Real estate
               </span>
             </motion.div>
 
@@ -79,16 +79,15 @@ export default function ComingSoon() {
               {...rise(0.08)}
               className="max-w-3xl font-display text-5xl font-bold leading-[1.05] text-white sm:text-6xl lg:text-7xl"
             >
-              A clearer view of the market is{" "}
-              <span className="italic text-pop">on its way.</span>
+              A clearer view of real estate is{" "}
+              <span className="italic text-pop">within reach.</span>
             </motion.h1>
 
             <motion.p
               {...rise(0.16)}
               className="mt-7 max-w-xl text-lg leading-relaxed text-white/60 sm:text-xl"
             >
-              We&apos;re putting the finishing touches on a learning experience
-              for{" "}
+              Explore practical learning for{" "}
               <span className="rounded-md border border-brand/40 bg-brand/10 px-2 py-0.5 text-white">
                 {topic}
               </span>
@@ -100,10 +99,10 @@ export default function ComingSoon() {
               className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
             >
               <Link
-                to="/#courses"
+                to="/#tracks"
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-black transition-colors hover:bg-zinc-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                Explore current programs
+                Explore learning pathways
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
               <Link
@@ -111,16 +110,16 @@ export default function ComingSoon() {
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white transition-colors hover:border-brand hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to home
+                Back to One Stock Academy
               </Link>
             </motion.div>
 
             <motion.div {...rise(0.32)} className="mt-6">
               <Link
-                to="/blog"
+                to="/#about"
                 className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/50 underline-offset-4 transition-colors hover:text-white hover:underline"
               >
-                Or read our latest market insights →
+                Learn about the real estate programme →
               </Link>
             </motion.div>
           </div>
@@ -134,7 +133,7 @@ export default function ComingSoon() {
           >
             <div className="mb-8 flex items-center justify-between gap-4">
               <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">
-                In development
+                Certification pathways
               </p>
               <span className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-brand">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand" />

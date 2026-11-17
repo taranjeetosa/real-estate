@@ -1,52 +1,34 @@
-import { Layers, MonitorSmartphone, ShieldCheck, Wrench, Zap } from "lucide-react";
+import { BriefcaseBusiness, Layers, Presentation, Wrench, Zap } from "lucide-react";
 
 export const whyChooseReasons = [
   {
-    title: "No Coding Required",
-    description: "Every programme is designed for practical, no-code application.",
-    icon: Zap,
-  },
-  {
-    title: "Function- & Industry-Specific Tracks",
-    description: "Choose the exact AI skill your role or sector demands.",
+    title: "Associated partner of OneX Properties",
+    description:
+      "One Stock Academy is an associated partner of OneX Properties, connecting the programme to real-world property work.",
     icon: Layers,
   },
   {
-    title: "Real Tools, Real Practice",
-    description: "Hands-on work with the same AI tools used in modern workplaces today.",
+    title: "AI for real estate work",
+    description:
+      "Explore practical uses for property analysis, marketing, and investment decisions.",
+    icon: Zap,
+  },
+  {
+    title: "A tier for your next step",
+    description:
+      "Choose Professional, Manager, or Expert based on your experience and goals.",
     icon: Wrench,
   },
   {
-    title: "Certified by CampusSeat",
-    description: "CampusSeat is the certifying authority and certifies every learner upon completion.",
-    icon: ShieldCheck,
+    title: "Post-course internship assistance",
+    description:
+      "Get assistance exploring internship opportunities with OneX Properties after course completion.",
+    icon: BriefcaseBusiness,
   },
   {
-    title: "Built for Busy Professionals",
-    description: "Flexible, self-paced online delivery that fits around a working schedule.",
-    icon: MonitorSmartphone,
-  },
-];
-
-/*
-  PLACEHOLDER TESTIMONIALS — replace the name, role and quote with real,
-  consented learner feedback before launch. Left as obvious placeholders on
-  purpose so invented reviews are never shown as genuine.
-*/
-export const testimonials = [
-  {
-    quote: "Add a real learner quote here about how the no-code lessons helped them at work.",
-    name: "Learner name",
-    role: "Role · Company",
-  },
-  {
-    quote: "Add a real learner quote here about the hands-on tools and the specialist track they chose.",
-    name: "Learner name",
-    role: "Role · Company",
-  },
-  {
-    quote: "Add a real learner quote here about the flexible, self-paced schedule and the certificate.",
-    name: "Learner name",
-    role: "Role · Company",
+    title: "A mix of learning formats",
+    description:
+      "Bring together video lessons, case scenarios, live sessions, webinars, and tool practice.",
+    icon: Presentation,
   },
 ];

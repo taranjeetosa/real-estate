@@ -2,23 +2,17 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowDown,
   ArrowRight,
-  BadgeCheck,
-  BrainCircuit,
-  Brain,
-  BriefcaseBusiness,
-  Calculator,
+  BookOpen,
   Check,
-  ChevronLeft,
-  ChevronRight,
   Clock3,
-  Code2,
-  Download,
   FileText,
   House,
   Megaphone,
-  Stethoscope,
   Sparkles,
   Target,
+  BriefcaseBusiness,
+  Users,
+  Video,
   X,
 } from "lucide-react";
 import Footer from "../components/Footer.jsx";
@@ -30,13 +24,12 @@ import {
   learningSteps,
   specialistTracks,
 } from "../data/aiCourse.js";
-import learnerTestimonials from "../data/testimonials.js";
 import { whyChooseReasons } from "../data/whyChoose.js";
 
 const navigationLinks = [
   { label: "About", href: "#about" },
-  { label: "Specialist tracks", href: "#tracks" },
-  { label: "Why AI Academy", href: "#why-ai" },
+  { label: "Learning pathways", href: "#tracks" },
+  { label: "Why real estate", href: "#why-ai" },
 ];
 
 const heroSlides = [
@@ -45,10 +38,6 @@ const heroSlides = [
   "/pexels-thisisengineering-3913031.jpg",
   "/pexels-mikhail-nilov-7988217.jpg",
 ];
-
-const publishedTestimonials = learnerTestimonials
-  .filter(({ published }) => published)
-  .sort((first, second) => first.sortOrder - second.sortOrder);
 
 function HeroBackgroundSlideshow() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -104,48 +93,47 @@ function AiCourseHero({ onGetStarted }) {
       <div className="hero-grid">
         <div className="hero-copy">
 
-          <h1>Elevate AI <br />for <span>your work.</span></h1>
+          <h1>AI for real<br /><span>estate work.</span></h1>
           <p className="hero-description">
-            Turn AI from a buzzword into a practical skill. Learn with real
-            tools, build useful workflows and find the specialist track
-            that fits your role.
+            Build practical skills in property data, AI-supported marketing,
+            and market intelligence through three real estate learning pathways.
           </p>
           <div className="hero-actions">
             <button className="button button-primary" type="button" onClick={onGetStarted}>
-              Find your AI track <ArrowRight size={17} />
+              Choose your tier <ArrowRight size={17} />
             </button>
-            <a className="text-link" href="#tracks">Explore the tracks <ArrowDown size={16} /></a>
+            <a className="text-link" href="#tracks">Explore learning pathways <ArrowDown size={16} /></a>
           </div>
           <div className="hero-proof">
             <span className="proof-icon"><Check size={15} /></span>
-            Practical, no-code learning <span className="proof-separator">·</span> Built for busy professionals
+            Practical AI for property work <span className="proof-separator">·</span> Three career tiers
           </div>
         </div>
 
-        <div className="hero-visual" role="img" aria-label="Illustration of an AI learning workspace">
+        <div className="hero-visual" role="img" aria-label="Real estate AI learning pathway">
           <div className="visual-orbit orbit-one" />
           <div className="visual-orbit orbit-two" />
           <div className="visual-glow" />
           <div className="visual-card">
             <div className="visual-card-top">
-              <span className="live-dot" /> YOUR NEXT SKILL
+              <span className="live-dot" /> YOUR PROPERTY SKILLS
               <span className="visual-card-menu">•••</span>
             </div>
-            <div className="visual-brain"><Brain size={42} strokeWidth={1.5} /></div>
-            <p className="visual-label">PRACTICAL AI</p>
-            <h2>Think smarter.<br />Work better.</h2>
+            <div className="visual-brain"><House size={42} strokeWidth={1.5} /></div>
+            <p className="visual-label">AI FOR REAL ESTATE</p>
+            <h2>Read the market.<br />Move forward.</h2>
             <div className="visual-progress"><span /></div>
-            <div className="visual-card-footer"><span>YOUR LEARNING PATH</span><span>01 — 10</span></div>
+            <div className="visual-card-footer"><span>YOUR LEARNING PATH</span><span>01 — 03</span></div>
           </div>
-          <div className="float-chip chip-top"><Sparkles size={16} /> Useful from day one</div>
-          <div className="float-chip chip-bottom"><BadgeCheck size={17} /> Certified by CampusSeat</div>
+          <div className="float-chip chip-top"><Sparkles size={16} /> Property-focused AI</div>
+          <div className="float-chip chip-bottom"><BriefcaseBusiness size={17} /> OneX Properties support</div>
           <div className="visual-star star-one">✳</div>
           <div className="visual-star star-two">✳</div>
         </div>
       </div>
       <CourseOverviewStats />
       <div className="hero-bottom">
-        <span>ONE STOCK ACADEMY</span><span className="hero-bottom-line" /><span>EIGHT SPECIALIST TRACKS</span><span className="hero-bottom-line" /><span>BUILT AROUND YOU</span>
+        <span>ONE STOCK ACADEMY</span><span className="hero-bottom-line" /><span>THREE LEARNING PATHWAYS</span><span className="hero-bottom-line" /><span>BUILT FOR REAL ESTATE</span>
       </div>
     </section>
   );
@@ -153,14 +141,14 @@ function AiCourseHero({ onGetStarted }) {
 
 function CourseOverviewStats() {
   const highlights = [
-    { title: "~20 hours", detail: "per specialist track", icon: Clock3 },
-    { title: "10 lessons", detail: "structured for practice", icon: Target },
-    { title: "Zero coding", detail: "no technical background needed", icon: Code2 },
-    { title: "Certificate", detail: "certified by CampusSeat", icon: BadgeCheck },
+    { title: "3 pathways", detail: "Professional, Manager, Expert", icon: Target },
+    { title: "4–6 weeks", detail: "depending on your chosen tier", icon: Clock3 },
+    { title: "Practical AI", detail: "for property workflows", icon: House },
+    { title: "Internship support", detail: "after course completion", icon: BriefcaseBusiness },
   ];
 
   return (
-    <section className="stats-strip" aria-label="AI course highlights">
+    <section className="stats-strip" aria-label="Real estate programme highlights">
       {highlights.map(({ title, detail, icon: Icon }) => (
         <div className="stat" key={title}>
           <span className="stat-icon"><Icon size={20} /></span>
@@ -175,18 +163,17 @@ function AiAcademyOverview({ onGetStarted }) {
   return (
     <section className="section about-section" id="about">
       <div className="section-heading">
-        <p className="section-kicker">AI, MEET EVERYDAY WORK</p>
-        <h2>Less theory. More <span>“I can use this.”</span></h2>
+        <p className="section-kicker">REAL ESTATE, WITH AI IN PRACTICE</p>
+        <h2>Market insight meets <span>property work.</span></h2>
       </div>
       <div className="about-content">
         <p className="about-lead">
-          The AI Academy is powered by{" "}
-          <span className="powered-by-highlight">Braincruise</span> to help you bring AI
-          into the practical, everyday skills you need.
+          Real estate learning from{" "}
+          <span className="powered-by-highlight">One Stock Academy</span>, associated partner of OneX Properties.
         </p>
         <div className="about-detail">
-          <p>Each programme is built around a specific function or industry, so learners build exactly the capability their role needs. On completion, every learner is certified by CampusSeat, the certifying authority, for their applied AI competency in their chosen specialisation.</p>
-          <button className="inline-link" type="button" onClick={onGetStarted}>Choose your track <ArrowRight size={16} /></button>
+          <p>One Stock Academy is an associated partner of OneX Properties. The programme explores how AI can support property analysis, marketing, client engagement, and investment decisions, with practical real-world assistance. After course completion, learners can receive assistance exploring internship opportunities with OneX Properties.</p>
+          <button className="inline-link" type="button" onClick={onGetStarted}>Choose your tier <ArrowRight size={16} /></button>
         </div>
       </div>
       <div className="benefit-grid">
@@ -202,146 +189,51 @@ function AiAcademyOverview({ onGetStarted }) {
   );
 }
 
-function LearnerTestimonials() {
-  const scrollerRef = useRef(null);
-  const trackRef = useRef(null);
-  const resumeTimerRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [isInteracting, setIsInteracting] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
-    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-  );
-  const isPaused = isHovered || isFocused || isInteracting || prefersReducedMotion;
-
-  useEffect(() => {
-    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const updateMotionPreference = (event) => setPrefersReducedMotion(event.matches);
-
-    motionPreference.addEventListener("change", updateMotionPreference);
-    return () => motionPreference.removeEventListener("change", updateMotionPreference);
-  }, []);
-
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    const track = trackRef.current;
-    if (!scroller || !track || isPaused) return undefined;
-
-    let frame = 0;
-    const loop = () => {
-      const loopPoint = track.children[1]?.offsetLeft || 0;
-      if (loopPoint > 0) {
-        scroller.scrollLeft += 0.55;
-        if (scroller.scrollLeft >= loopPoint) scroller.scrollLeft -= loopPoint;
-      }
-      frame = window.requestAnimationFrame(loop);
-    };
-
-    frame = window.requestAnimationFrame(loop);
-    return () => window.cancelAnimationFrame(frame);
-  }, [isPaused]);
-
-  useEffect(() => () => {
-    if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
-  }, []);
-
-  function scrollTestimonials(direction) {
-    const scroller = scrollerRef.current;
-    const track = trackRef.current;
-    const firstGroup = track?.children[0];
-    const card = firstGroup?.querySelector(".testimonial-card");
-    const loopPoint = track?.children[1]?.offsetLeft || 0;
-    if (!scroller || !track || !firstGroup || !card || !loopPoint) return;
-
-    const cardGap = Number.parseFloat(window.getComputedStyle(firstGroup).columnGap) || 0;
-    const step = card.getBoundingClientRect().width + cardGap;
-    setIsInteracting(true);
-    if (resumeTimerRef.current) window.clearTimeout(resumeTimerRef.current);
-
-    if (direction < 0 && scroller.scrollLeft < step) {
-      scroller.scrollLeft += loopPoint;
-    }
-
-    scroller.scrollBy({
-      left: direction * step,
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
-    resumeTimerRef.current = window.setTimeout(() => {
-      setIsInteracting(false);
-      resumeTimerRef.current = null;
-    }, 900);
-  }
+function ProgramFormats() {
+  const formats = [
+    {
+      icon: Video,
+      title: "Video lessons",
+      description: "Interactive lessons and case scenarios rooted in property work.",
+    },
+    {
+      icon: Users,
+      title: "Live expert sessions",
+      description: "Join live sessions and masterclasses with industry context.",
+    },
+    {
+      icon: BookOpen,
+      title: "Webinars & tool practice",
+      description: "Explore industry webinars and a sandbox for real estate tools.",
+    },
+  ];
 
   return (
-    <div
-      className="testimonials-panel"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocusCapture={() => setIsFocused(true)}
-      onBlurCapture={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setIsFocused(false);
-      }}
-    >
+    <div className="testimonials-panel">
       <div className="testimonials-heading">
         <div>
-          <p className="why-kicker">LEARNER STORIES</p>
-          <h3>In their own words.</h3>
-        </div>
-        <div className="testimonial-controls" aria-label="Scroll testimonials">
-          <button
-            className="testimonial-arrow"
-            type="button"
-            aria-label="Scroll testimonials left"
-            onClick={() => scrollTestimonials(-1)}
-          >
-            <ChevronLeft size={19} />
-          </button>
-          <button
-            className="testimonial-arrow"
-            type="button"
-            aria-label="Scroll testimonials right"
-            onClick={() => scrollTestimonials(1)}
-          >
-            <ChevronRight size={19} />
-          </button>
+          <p className="why-kicker">HOW YOU LEARN</p>
+          <h3>Learning built around practice.</h3>
         </div>
       </div>
 
       <div
         className="testimonial-viewport"
-        ref={scrollerRef}
         role="region"
-        aria-label="Learner testimonials"
-        aria-roledescription="carousel"
+        aria-label="Programme learning formats"
         tabIndex={0}
       >
-        {publishedTestimonials.length > 0 ? (
-          <div className="testimonial-track" ref={trackRef}>
-            {[false, true].map((isDuplicate) => (
-              <div
-                className="testimonial-group"
-                key={isDuplicate ? "duplicate" : "original"}
-                aria-hidden={isDuplicate}
-              >
-                {publishedTestimonials.map(({ id, name, role, text, image }) => (
-                  <article className="testimonial-card" key={`${id}-${isDuplicate}`}>
-                    <span className="testimonial-mark" aria-hidden="true">“</span>
-                    <p className="testimonial-quote">{text}</p>
-                    <div className="testimonial-author">
-                      <img src={image} alt="" loading="lazy" />
-                      <div>
-                        <h4>{name}</h4>
-                        <p>{role}</p>
-                      </div>
-                    </div>
-                  </article>
-                ))}
+        <div className="testimonial-group">
+          {formats.map(({ icon: Icon, title, description }) => (
+            <article className="testimonial-card" key={title}>
+              <span className="testimonial-mark" aria-hidden="true"><Icon size={22} /></span>
+              <p className="testimonial-quote">{title}</p>
+              <div className="testimonial-author">
+                <p>{description}</p>
               </div>
-            ))}
-          </div>
-        ) : (
-          <p className="testimonials-empty">Learner stories will appear here soon.</p>
-        )}
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -353,15 +245,15 @@ function WhyChooseAcademy() {
       <div className="why-inner">
         <div className="why-left">
           <div className="why-heading">
-            <p className="why-kicker">WHY ONE STOCK ACADEMY</p>
-            <h2 id="why-ai-title">Why choose <span>ONE STOCK ACADEMY</span></h2>
-            <p>Practical, no-code AI learning that fits your role and your schedule.</p>
+            <p className="why-kicker">WHY THIS PROGRAMME</p>
+            <h2 id="why-ai-title">Real estate skills for <span>an AI-enabled market.</span></h2>
+            <p>Build practical capability across property data, marketing, and market intelligence.</p>
             <div className="why-actions">
               <a className="button button-primary" href="#tracks">
-                Explore specialist tracks <ArrowRight size={16} />
+                Explore learning pathways <ArrowRight size={16} />
               </a>
               <a className="why-secondary-link" href="#journey">
-                See how the programme works <ArrowRight size={15} />
+                See how you will learn <ArrowRight size={15} />
               </a>
             </div>
           </div>
@@ -382,7 +274,7 @@ function WhyChooseAcademy() {
           </div>
         </div>
 
-        <LearnerTestimonials />
+        <ProgramFormats />
       </div>
     </section>
   );
@@ -392,32 +284,33 @@ function CourseModules({ onChooseTrack }) {
     <section className="tracks-section" id="tracks">
       <div className="section tracks-heading">
         <div>
-          <p className="section-kicker">YOUR WORK, YOUR AI</p>
-          <h2>One Stock Academy.<br /><span>Your kind of AI.</span></h2>
+          <p className="section-kicker">THREE LEARNING PATHWAYS</p>
+          <h2>Choose your path<br /><span>in real estate.</span></h2>
         </div>
-        <p className="tracks-intro">Start with the work you know. Pick a focused track and explore how AI can help you do it better.</p>
+        <p className="tracks-intro">Choose a programme that fits your experience, from foundational property workflows to strategic market intelligence.</p>
       </div>
       <div className="tracks-grid">
-        {specialistTracks.map(({ title, description, audience }, index) => (
+        {specialistTracks.map(({ title, duration, description, audience }, index) => (
           <article className="track-card" key={title}>
-            <div className="track-card-top"><span className="track-index">TRACK 0{index + 1}</span></div>
+            <div className="track-card-top"><span className="track-index">TIER 0{index + 1} · {duration.toUpperCase()}</span></div>
             <h3>{title}</h3>
             <p className="track-description">{description}</p>
             <p className="track-audience">{audience}</p>
-            <button className="track-link" type="button" onClick={() => onChooseTrack(title)} aria-label={`View syllabus for ${title}`}>
-              Know more <ArrowRight className="track-link-arrow" size={16} />
+            <button className="track-link" type="button" onClick={() => onChooseTrack(title)} aria-label={`View details for ${title}`}>
+              Tier details <ArrowRight className="track-link-arrow" size={16} />
             </button>
           </article>
         ))}
       </div>
-      <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>Every track includes <strong>10 lessons</strong>, around <strong>20 hours</strong> of online learning, and certification by CampusSeat upon completion.</p></div>
+      <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>All three programmes apply AI to real estate practice, with real-world assistance and post-course internship assistance through One Stock Academy&apos;s association with <strong>OneX Properties</strong>.</p></div>
     </section>
   );
 }
 
-function TrackSyllabusModal({ track, onClose }) {
+function TrackSyllabusModal({ track, onClose, onGetStarted }) {
   const dialogRef = useRef(null);
   const closeButtonRef = useRef(null);
+  const tier = specialistTracks.find(({ title }) => title === track);
 
   useEffect(() => {
     if (!track) return undefined;
@@ -479,7 +372,7 @@ function TrackSyllabusModal({ track, onClose }) {
         <button
           className="track-modal-close"
           type="button"
-          aria-label="Close syllabus dialog"
+          aria-label="Close tier details"
           onClick={onClose}
           ref={closeButtonRef}
         >
@@ -487,20 +380,19 @@ function TrackSyllabusModal({ track, onClose }) {
         </button>
         <div className="track-modal-icon" aria-hidden="true">
           <FileText size={43} strokeWidth={1.8} />
-          <span>PDF</span>
+          <span>PROGRAMME</span>
         </div>
-        <h2 id="track-modal-title">{track} <span>(20 hrs — 10 Lessons)</span></h2>
+        <h2 id="track-modal-title">{tier.title} <span>({tier.duration} · {tier.level})</span></h2>
         <p className="track-modal-description">
-          Get the detailed syllabus, programme structure, and learning
-          outcomes for this track.
+          {tier.focus} One Stock Academy also provides real-world assistance and post-course internship assistance with OneX Properties.
         </p>
-        <a
+        <button
           className="button track-modal-download"
-          href="/Trading_Masterclass_Syllabus.pdf"
-          download="Trading_Masterclass_Syllabus.pdf"
+          type="button"
+          onClick={() => onGetStarted(track)}
         >
-          Download PDF <Download size={19} />
-        </a>
+          Enquire about this tier <ArrowRight size={19} />
+        </button>
       </section>
     </div>
   );
@@ -511,17 +403,17 @@ function CourseJourney({ onGetStarted }) {
     <section className="journey-section" id="journey">
       <div className="section journey-content">
         <div>
-          <p className="section-kicker">A CLEAR PATH FORWARD</p>
-          <h2>From curious<br />to <span>confident.</span></h2>
-          <p className="journey-description">A structured, self-paced learning experience—designed to help you take the next step with AI, on your terms.</p>
-          <button className="button button-light" type="button" onClick={onGetStarted}>Start your journey <ArrowRight size={17} /></button>
+          <p className="section-kicker">YOUR LEARNING EXPERIENCE</p>
+          <h2>Learn, apply,<br /><span>move forward.</span></h2>
+          <p className="journey-description">Build real estate capability through guided content, practical assistance, and support exploring internship opportunities after course completion.</p>
+          <button className="button button-light" type="button" onClick={onGetStarted}>Register your interest <ArrowRight size={17} /></button>
         </div>
         <div className="journey-steps">
           {learningSteps.map(({ title, description }, index) => (
             <div className="journey-step" key={title}>
               <span className="step-count">0{index + 1}</span>
               <div><h3>{title}</h3><p>{description}</p></div>
-              {index === learningSteps.length - 1 ? <BadgeCheck size={20} /> : <Check size={19} />}
+              {index === learningSteps.length - 1 ? <BriefcaseBusiness size={20} /> : <Check size={19} />}
             </div>
           ))}
         </div>
@@ -536,7 +428,7 @@ function CourseFaq() {
       <div className="faq-heading">
         <p className="section-kicker">GOOD TO KNOW</p>
         <h2>FAQ<span>s.</span></h2>
-        <p>Everything you need to know before you get started.</p>
+        <p>Find the right real estate learning pathway for your experience and goals.</p>
       </div>
       <div className="faq-list">
         {courseFaqs.map(({ question, answer }, index) => (
@@ -571,11 +463,11 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
       <input id="email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required />
       <label htmlFor="phone">Phone number</label>
       <input id="phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+91 98765 43210" required />
-      <label htmlFor="track">Choose a specialist track</label>
+      <label htmlFor="track">Choose a learning pathway</label>
       <select id="track" name="track" value={selectedTrack} onChange={(event) => onTrackChange(event.target.value)}>
         {specialistTracks.map((track) => <option key={track.title} value={track.title}>{track.title}</option>)}
       </select>
-      <button className="button button-primary form-submit" type="submit">Show my interest <ArrowRight size={17} /></button>
+      <button className="button button-primary form-submit" type="submit">Enquire about this tier <ArrowRight size={17} /></button>
       
     </>
   );
@@ -583,12 +475,10 @@ function InterestForm({ selectedTrack, onTrackChange, submitted, onReset }) {
 
 function WhoThisIsForCard() {
   const audiences = [
-    { label: "Managers and team leads", icon: BriefcaseBusiness },
-    { label: "Finance, accounting, audit and tax professionals", icon: Calculator },
-    { label: "Sales and marketing professionals", icon: Megaphone },
-    { label: "Healthcare and nursing professionals", icon: Stethoscope },
-    { label: "Real estate professionals", icon: House },
-    { label: "Anyone seeking practical AI skills without a technical background", icon: BrainCircuit },
+    { label: "People beginning a career in real estate", icon: Users },
+    { label: "Property professionals building AI skills", icon: House },
+    { label: "Real estate marketing teams and managers", icon: Megaphone },
+    { label: "Experienced professionals pursuing strategic growth", icon: Target },
   ];
 
   return (
@@ -604,8 +494,8 @@ function WhoThisIsForCard() {
           </li>
         ))}
       </ul>
-      <p className="audience-certification">
-        <strong>Certification:</strong> Certified by CampusSeat upon completion.
+      <p className="audience-partnership">
+        <strong>After course completion:</strong> Internship assistance with OneX Properties.
       </p>
     </section>
   );
@@ -684,7 +574,14 @@ export default function Home() {
       </main>
       <Footer />
       <ScrollToTop />
-      <TrackSyllabusModal track={activeTrack} onClose={closeTrackModal} />
+      <TrackSyllabusModal
+        track={activeTrack}
+        onClose={closeTrackModal}
+        onGetStarted={(track) => {
+          closeTrackModal();
+          goToEnquiry(track);
+        }}
+      />
     </>
   );
 }

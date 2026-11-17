@@ -17,11 +17,11 @@ const socials = [
 ];
 
 const courseLinks = [
-  { label: "Artificial Intelligence", href: "#home" },
-  { label: "Specialist tracks", href: "#tracks" },
-  { label: "Learning journey", href: "#journey" },
-  { label: "Frequently asked questions", href: "#faq" },
-  { label: "Show interest", href: "#enquire" },
+  { label: "AI for Real Estate Professional", href: "#tracks" },
+  { label: "AI for Real Estate Manager", href: "#tracks" },
+  { label: "AI for Real Estate Expert", href: "#tracks" },
+  { label: "Learning experience", href: "#journey" },
+  { label: "Register your interest", href: "#enquire" },
 ];
 
 export default function Footer() {
@@ -35,8 +35,8 @@ export default function Footer() {
               <img src="/logo-brand.png" alt="One Stock Academy" className="footer-logo" />
             </a>
             <p className="footer-description">
-              Practical, no-code AI learning for professionals, with role-specific
-              tracks from the One Stock Academy.
+              Practical AI-powered real estate learning, with real-world and
+              post-course internship assistance through One Stock Academy.
             </p>
             <div className="footer-socials" aria-label="Social media">
               {socials.map(({ label, icon, href }) => (
@@ -55,19 +55,19 @@ export default function Footer() {
           </div>
 
           <div className="footer-column">
-            <h2 className="footer-column-title">Explore</h2>
+            <h2 className="footer-column-title">Real estate academy</h2>
             <div className="footer-links">
-              <a href="#about">About the AI Academy</a>
-              <a href="#why-ai">Why learn AI</a>
-              <a href="#tracks">Specialist tracks</a>
+              <a href="#about">Programme overview</a>
+              <a href="#why-ai">Why this programme</a>
+              <a href="#tracks">Certification tiers</a>
               <a href="#faq">FAQs</a>
             </div>
           </div>
 
           <div className="footer-column">
-            <h2 className="footer-column-title">AI Academy</h2>
+            <h2 className="footer-column-title">Programme</h2>
             <div className="footer-links">
-              {courseLinks.map(({ label, href }) => <a href={href} key={href}>{label}</a>)}
+              {courseLinks.map(({ label, href }) => <a href={href} key={label}>{label}</a>)}
             </div>
           </div>
 
@@ -84,7 +84,7 @@ export default function Footer() {
 
         <div className="footer-course-note">
           <h2>Disclaimer</h2>
-          <p>The information provided in this brochure is intended for general informational and promotional purposes only. Course content, modules, learning outcomes, schedules, faculty, fees, certifications, and program delivery may be updated or modified by ONE STOCK ACADEMY without prior notice to reflect industry trends and academic improvements. Participation in this program does not guarantee employment, promotion, or specific business outcomes. Learners are encouraged to verify the latest course details with ONE STOCK ACADEMY before enrollment. All trademarks, logos, and third-party product names mentioned remain the property of their respective owners.
+          <p>Programme information is provided for general guidance. Course content, schedules, and delivery may change; please confirm current information with One Stock Academy before enrolling. One Stock Academy is an associated partner of OneX Properties and provides real-world assistance and support exploring internship opportunities after course completion. Internship opportunities are subject to availability and are not guaranteed. Completing a programme does not guarantee employment, investment returns, or a specific business outcome.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default function Footer() {
         <div className="footer-bottom-row">
           <span>© {new Date().getFullYear()} One Stock Academy</span>
           <a href="#home">Back to top ↑</a>
-          <span>Practical AI education</span>
+          <span>AI-powered real estate learning</span>
         </div>
       </div>
     </footer>

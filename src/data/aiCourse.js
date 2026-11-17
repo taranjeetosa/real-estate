@@ -1,138 +1,109 @@
-import {
-  BadgeCheck,
-  BriefcaseBusiness,
-  Code2,
-  ShieldCheck,
-  Sparkles,
-  Target,
-  Workflow,
-  Wrench,
-} from "lucide-react";
+import { Award, BriefcaseBusiness, Building2, TrendingUp } from "lucide-react";
 
 export const specialistTracks = [
   {
-    title: "AI for Managers",
+    title: "AI for Real Estate Professional",
+    duration: "5 weeks",
+    level: "Beginner to intermediate",
+    focus: "Build practical skills in property tools, digital workflows, and client engagement.",
     description:
-      "Use AI insights for planning, problem-solving and operational efficiency, and lead data-informed teams.",
-    audience: "Managers & team leads",
-    icon: BriefcaseBusiness,
+      "Build core skills with AI-enabled property tools, digital workflows, and client engagement practices.",
+    audience: "For people starting or growing a real estate career",
   },
   {
-    title: "AI for Auditing",
+    title: "AI for Real Estate Manager",
+    duration: "4 weeks",
+    level: "Beginner to intermediate",
+    focus: "Develop AI-supported real estate marketing campaigns and client engagement.",
     description:
-      "Apply AI to risk assessment, fraud detection, audit planning, sampling and compliance testing.",
-    audience: "Auditors & accounting professionals",
-    icon: ShieldCheck,
+      "Plan and improve AI-supported marketing campaigns to attract, convert, and retain property clients.",
+    audience: "For real estate and marketing professionals",
   },
   {
-    title: "AI for Taxation",
+    title: "AI for Real Estate Expert",
+    duration: "6 weeks",
+    level: "Intermediate to expert",
+    focus: "Apply market intelligence, predictive trends, and growth strategies.",
     description:
-      "Explore AI for tax planning, compliance, interpretation, advisory work and regulatory monitoring.",
-    audience: "Tax & finance professionals",
-    icon: Target,
-  },
-  {
-    title: "AI for Accounting",
-    description:
-      "Apply AI to financial and management accounting, reporting, analysis and forecasting.",
-    audience: "Accounting & finance professionals",
-    icon: Workflow,
-  },
-  {
-    title: "AI for Sales & Marketing",
-    description:
-      "Use AI automation and outreach tools for lead generation, sales and brand visibility.",
-    audience: "Sales & marketing professionals",
-    icon: Sparkles,
-  },
-  {
-    title: "AI for Healthcare",
-    description:
-      "Explore practical, no-code AI applications for healthcare workflows.",
-    audience: "Healthcare professionals",
-    icon: BadgeCheck,
-  },
-  {
-    title: "AI for Real Estate",
-    description:
-      "Explore property data analysis, marketing automation, forecasting and investment decisions.",
-    audience: "Real estate professionals",
-    icon: Target,
-  },
-  {
-    title: "AI for Nursing",
-    description:
-      "Build data literacy and a working understanding of machine learning for patient care and ward workflows.",
-    audience: "Nursing professionals",
-    icon: BadgeCheck,
+      "Apply market intelligence, predictive trends, and scalable growth strategies to real estate decisions.",
+    audience: "For experienced real estate professionals",
   },
 ];
 
 export const courseBenefits = [
   {
-    title: "No coding required",
+    title: "Associated with OneX Properties",
     description:
-      "Learn practical AI applications without needing a programming background.",
-    icon: Code2,
+      "One Stock Academy connects learning with real-world assistance through its association with OneX Properties.",
+    icon: Building2,
   },
   {
-    title: "Made for your role",
+    title: "AI applied to property",
     description:
-      "Choose a focused track built around the work you do and the industry you know.",
-    icon: Target,
+      "Explore property data, market intelligence, marketing, and investment workflows.",
+    icon: TrendingUp,
   },
   {
-    title: "Learn by doing",
+    title: "Certified by One Stock Academy",
     description:
-      "Practise with real AI tools and useful workflows you can take into your work.",
-    icon: Wrench,
+      "Complete your chosen programme and receive a course-completion certificate from One Stock Academy.",
+    icon: Award,
   },
   {
-    title: "Get recognised",
+    title: "Internship assistance",
     description:
-      "Get certified by CampusSeat, the certifying authority, when you complete your programme.",
-    icon: BadgeCheck,
+      "After course completion, get support exploring internship opportunities with OneX Properties.",
+    icon: BriefcaseBusiness,
   },
 ];
 
 export const courseFaqs = [
   {
-    question: "Do I need coding or technical experience?",
+    question: "Which tier should I start with?",
     answer:
-      "No. These tracks are designed around practical, no-code learning, so a programming background is not required.",
+      "The Professional tier is designed as a starting point. Choose Manager if your focus is real estate marketing, or Expert if you have experience and want to work on strategic market intelligence.",
   },
   {
-    question: "How long does a track take?",
+    question: "How long do the programmes take?",
     answer:
-      "Each specialist track includes 10 lessons and takes about 20 hours. Learning is delivered online.",
+      "The Professional tier runs for 5 weeks, Manager for 4 weeks, and Expert for 6 weeks.",
   },
   {
-    question: "Who issues the certificate?",
+    question: "Who issues the course certificate?",
     answer:
-      "CampusSeat is the certifying authority and certifies your applied AI competency when you complete your chosen programme.",
+      "One Stock Academy issues a course-completion certificate after successful completion of your chosen programme.",
   },
   {
-    question: "Can I take more than one track?",
+    question: "Do I need prior real estate experience?",
     answer:
-      "Yes. You can take multiple function- or industry-specific tracks to build broader AI capability.",
+      "The Professional tier does not require prior experience. The Manager and Expert tiers assume some background in real estate or marketing.",
+  },
+  {
+    question: "How is the programme delivered?",
+    answer:
+      "Learning combines interactive video lessons and case scenarios with live expert sessions, masterclasses, webinars, and hands-on practice with real estate tools.",
   },
 ];
 
 export const learningSteps = [
   {
-    title: "Choose your specialisation",
-    description: "Find the AI track that fits your role or industry.",
+    title: "Choose your tier",
+    description: "Select Professional, Manager, or Expert to match your goals.",
   },
   {
-    title: "Learn through practice",
-    description: "Work through 10 online lessons at your own pace.",
+    title: "Learn with real estate scenarios",
+    description: "Explore video lessons, case scenarios, and practical tools.",
   },
   {
-    title: "Put new skills to work",
-    description: "Apply practical AI tools and workflows in your work.",
+    title: "Join live learning",
+    description: "Build on your learning through sessions, masterclasses, and webinars.",
   },
   {
-    title: "Earn your certificate",
-    description: "Complete your track and get certified by CampusSeat, the certifying authority.",
+    title: "Get real-world assistance",
+    description: "Put your learning into context with support from One Stock Academy.",
+  },
+  {
+    title: "Explore internship opportunities",
+    description: "After course completion, receive assistance exploring opportunities with OneX Properties.",
   },
 ];

@@ -33,7 +33,7 @@ export default function Navbar({ links = [], onGetStarted }) {
         ))}
         {onGetStarted && (
           <button className="button button-nav" type="button" onClick={handleGetStarted}>
-            Get started <ArrowRight size={16} />
+            Choose a tier <ArrowRight size={16} />
           </button>
         )}
       </nav>
