@@ -21,6 +21,7 @@ import Navbar from "../components/Navbar.jsx";
 import LeadPopup from "../components/LeadPopup.jsx";
 import useLeadSheetSubmission from "../hooks/useLeadSheetSubmission.js";
 import {
+  brokerRoadmapSteps,
   courseBenefits,
   courseFaqs,
   learningSteps,
@@ -254,20 +255,17 @@ function PathwayCarousel({ onViewCurriculum, onGetStarted }) {
     const viewportCenter =
       viewport.getBoundingClientRect().left + viewport.clientWidth / 2;
     const cards = [...viewport.querySelectorAll(".pathway-card")];
-    const closestCardIndex = cards.reduce(
-      (closestIndex, card, index) => {
-        const cardCenter =
-          card.getBoundingClientRect().left + card.offsetWidth / 2;
-        const closestCard = cards[closestIndex];
-        const closestCenter =
-          closestCard.getBoundingClientRect().left + closestCard.offsetWidth / 2;
-        return Math.abs(cardCenter - viewportCenter) <
-          Math.abs(closestCenter - viewportCenter)
-          ? index
-          : closestIndex;
-      },
-      0,
-    );
+    const closestCardIndex = cards.reduce((closestIndex, card, index) => {
+      const cardCenter =
+        card.getBoundingClientRect().left + card.offsetWidth / 2;
+      const closestCard = cards[closestIndex];
+      const closestCenter =
+        closestCard.getBoundingClientRect().left + closestCard.offsetWidth / 2;
+      return Math.abs(cardCenter - viewportCenter) <
+        Math.abs(closestCenter - viewportCenter)
+        ? index
+        : closestIndex;
+    }, 0);
 
     if (closestCardIndex !== activeIndexRef.current) {
       activeIndexRef.current = closestCardIndex;
@@ -824,57 +822,87 @@ function WhyChooseAcademy() {
     </section>
   );
 }
-function CourseModules({ onChooseTrack }) {
+function ChooseYourPathSection() {
   return (
     <section className="tracks-section" id="tracks">
       <div className="section tracks-heading">
         <div>
-          <p className="section-kicker">THREE LEARNING PATHWAYS</p>
+          <p className="section-kicker">YOUR CAREER ROADMAP</p>
           <h2>
             Choose your path
             <br />
             <span>in real estate.</span>
           </h2>
         </div>
-        <p className="tracks-intro">
-          Choose a programme that fits your experience, from foundational
-          property workflows to strategic market intelligence.
-        </p>
       </div>
-      <div className="tracks-grid">
-        {specialistTracks.map(
-          ({ title, duration, description, audience }, index) => (
-            <article className="track-card" key={title}>
-              <div className="track-card-top">
-                <span className="track-index">
-                  TIER 0{index + 1} · {duration.toUpperCase()}
-                </span>
+      <BrokerRoadmap />
+    </section>
+  );
+}
+
+function BrokerRoadmap() {
+  return (
+    <div className="broker-roadmap">
+      <ol className="broker-roadmap-list" aria-label="Broker career roadmap">
+        {brokerRoadmapSteps.map(({ title, description }, index) => (
+          <li
+            className={`broker-roadmap-step${index % 2 ? " is-below" : " is-above"}`}
+            key={title}
+          >
+            <div className="broker-roadmap-copy">
+              <h4>{title}</h4>
+              <p>{description}</p>
+            </div>
+            <span className="broker-roadmap-marker" aria-hidden="true">
+              {index + 1}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+function CourseJourney({ onGetStarted }) {
+  return (
+    <section className="journey-section" id="journey">
+      <div className="section journey-content">
+        <div>
+          <p className="section-kicker">YOUR LEARNING EXPERIENCE</p>
+          <h2>
+            Learn, apply,
+            <br />
+            <span>move forward.</span>
+          </h2>
+          <p className="journey-description">
+            Build real estate capability through guided content, practical
+            assistance, and support exploring internship opportunities after
+            course completion.
+          </p>
+          <button
+            className="button button-light"
+            type="button"
+            onClick={onGetStarted}
+          >
+            Register your interest <ArrowRight size={17} />
+          </button>
+        </div>
+        <div className="journey-steps">
+          {learningSteps.map(({ title, description }, index) => (
+            <div className="journey-step" key={title}>
+              <span className="step-count">0{index + 1}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
               </div>
-              <h3>{title}</h3>
-              <p className="track-description">{description}</p>
-              <p className="track-audience">{audience}</p>
-              <button
-                className="track-link"
-                type="button"
-                onClick={() => onChooseTrack(title)}
-                aria-label={`View details for ${title}`}
-              >
-                Tier details{" "}
-                <ArrowRight className="track-link-arrow" size={16} />
-              </button>
-            </article>
-          ),
-        )}
-      </div>
-      <div className="tracks-note">
-        <span className="note-mark">
-          <Sparkles size={17} />
-        </span>
-        <p>
-          All three programmes apply AI to real estate practice, with real-world
-          assistance and post-course internship assistance through One Stock
-          Academy&apos;s association with <strong>OneX Properties</strong>.
-        </p>
+              {index === learningSteps.length - 1 ? (
+                <BriefcaseBusiness size={20} />
+              ) : (
+                <Check size={19} />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -974,51 +1002,6 @@ function TrackSyllabusModal({ track, onClose, onGetStarted }) {
         </button>
       </section>
     </div>
-  );
-}
-
-function CourseJourney({ onGetStarted }) {
-  return (
-    <section className="journey-section" id="journey">
-      <div className="section journey-content">
-        <div>
-          <p className="section-kicker">YOUR LEARNING EXPERIENCE</p>
-          <h2>
-            Learn, apply,
-            <br />
-            <span>move forward.</span>
-          </h2>
-          <p className="journey-description">
-            Build real estate capability through guided content, practical
-            assistance, and support exploring internship opportunities after
-            course completion.
-          </p>
-          <button
-            className="button button-light"
-            type="button"
-            onClick={onGetStarted}
-          >
-            Register your interest <ArrowRight size={17} />
-          </button>
-        </div>
-        <div className="journey-steps">
-          {learningSteps.map(({ title, description }, index) => (
-            <div className="journey-step" key={title}>
-              <span className="step-count">0{index + 1}</span>
-              <div>
-                <h3>{title}</h3>
-                <p>{description}</p>
-              </div>
-              {index === learningSteps.length - 1 ? (
-                <BriefcaseBusiness size={20} />
-              ) : (
-                <Check size={19} />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -1246,7 +1229,7 @@ export default function Home() {
         <WhyChooseAcademy />
         <div className="course-followup-layout">
           <div className="course-followup-content">
-            <CourseModules onChooseTrack={openTrackSyllabus} />
+            <ChooseYourPathSection />
             <CourseJourney onGetStarted={() => goToEnquiry()} />
             <CourseFaq />
           </div>

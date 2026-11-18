@@ -303,7 +303,6 @@ input:focus-visible {
 }
 .hero h1,
 .section h2,
-.journey-content h2,
 .enquiry-copy h2 {
   font-family: "Manrope", sans-serif;
   font-weight: 700;
@@ -1428,107 +1427,6 @@ input:focus-visible {
 .tracks-heading h2 {
   margin-top: 14px;
 }
-.tracks-intro {
-  max-width: 350px;
-  margin: 0 0 5px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.8;
-}
-.tracks-grid {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 32px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 48px;
-}
-.track-card {
-  min-height: 190px;
-  display: flex;
-  flex-direction: column;
-  padding: 15px 0 12px;
-  border: 0;
-  border-top: 1px solid #d5d8de;
-  border-radius: 0;
-  background: transparent;
-  transition: border-color 0.2s ease;
-}
-.track-card:hover {
-  border-color: var(--blue-deep);
-}
-.track-card-top {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.track-index {
-  color: var(--blue-deep);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-.track-card h3 {
-  font:
-    700 17px "Manrope",
-    sans-serif;
-  letter-spacing: -0.025em;
-  margin: 11px 0 7px;
-}
-.track-description {
-  max-width: 490px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.7;
-  margin: 0;
-}
-.track-audience {
-  color: var(--sage);
-  font-size: 10px;
-  font-weight: 600;
-  margin: 7px 0 10px;
-}
-.track-link {
-  margin-top: auto;
-  padding: 9px 13px;
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  gap: 8px;
-  border: 1px solid rgba(37, 76, 210, 0.24);
-  border-radius: 5px;
-  background: transparent;
-  color: var(--blue-deep);
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transform-origin: left center;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-.track-link:hover,
-.track-link:focus-visible {
-  transform: scale(1.06);
-  border-color: var(--button-hover);
-  background: var(--button-hover);
-  color: var(--white);
-  box-shadow: 0 5px 14px rgba(37, 76, 210, 0.2);
-}
-.track-link-arrow {
-  transition: transform 0.2s ease;
-}
-.track-link:hover .track-link-arrow,
-.track-link:focus-visible .track-link-arrow {
-  transform: translate(4px, -3px) rotate(-45deg);
-}
-.track-link:focus-visible {
-  outline: 2px solid var(--blue-deep);
-  outline-offset: 4px;
-}
 .track-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -1626,33 +1524,6 @@ input:focus-visible {
     transform: translateY(0) scale(1);
   }
 }
-.tracks-note {
-  max-width: 1236px;
-  margin: 18px auto 0;
-  padding: 0 32px;
-  display: flex;
-  gap: 11px;
-  align-items: center;
-  color: var(--muted);
-  font-size: 11px;
-}
-.tracks-note p {
-  margin: 0;
-  line-height: 1.65;
-}
-.tracks-note strong {
-  color: var(--ink);
-}
-.note-mark {
-  flex: 0 0 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  color: var(--blue-deep);
-  border-radius: 50%;
-  background: var(--white);
-}
-
 .course-followup-layout {
   max-width: 1600px;
   margin: 0 auto;
@@ -1844,6 +1715,93 @@ input:focus-visible {
 }
 .audience-partnership strong {
   color: #173c70;
+}
+
+.broker-roadmap {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.broker-roadmap-list {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.broker-roadmap-list::before {
+  position: absolute;
+  top: 50%;
+  right: 9%;
+  left: 9%;
+  border-top: 1px dashed #8a8a8a;
+  content: "";
+}
+.broker-roadmap-step {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  min-height: 310px;
+  grid-template-rows: minmax(0, 1fr) 30px minmax(0, 1fr);
+  justify-items: center;
+}
+.broker-roadmap-step::after {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  width: 1px;
+  background: #999999;
+  content: "";
+}
+.broker-roadmap-step.is-above::after {
+  top: calc(50% - 35px);
+  height: 21px;
+}
+.broker-roadmap-step.is-below::after {
+  top: calc(50% + 14px);
+  height: 21px;
+}
+.broker-roadmap-copy {
+  width: 100%;
+  max-width: 210px;
+  grid-row: 1;
+  align-self: end;
+  padding: 0 10px 22px;
+  text-align: center;
+}
+.broker-roadmap-step.is-below .broker-roadmap-copy {
+  grid-row: 3;
+  align-self: start;
+  padding: 22px 10px 0;
+}
+.broker-roadmap-copy h4 {
+  margin: 0 0 7px;
+  color: var(--ink);
+  font:
+    700 12px / 1.35 "Manrope",
+    sans-serif;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+.broker-roadmap-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+.broker-roadmap-marker {
+  z-index: 2;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  grid-row: 2;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .journey-section {
@@ -2258,9 +2216,6 @@ input:focus-visible {
   .testimonials-panel {
     width: 100%;
   }
-  .tracks-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .journey-content {
     gap: 55px;
   }
@@ -2613,22 +2568,6 @@ input:focus-visible {
     display: block;
     padding-bottom: 17px;
   }
-  .tracks-intro {
-    margin-top: 15px;
-    font-size: 12px;
-  }
-  .tracks-grid {
-    grid-template-columns: 1fr;
-    padding: 0 22px;
-    gap: 0;
-  }
-  .track-card {
-    min-height: 170px;
-    padding: 13px 0 11px;
-  }
-  .track-card h3 {
-    font-size: 15px;
-  }
   .track-modal {
     padding: 42px 24px 30px;
   }
@@ -2638,13 +2577,52 @@ input:focus-visible {
   .track-modal-description {
     font-size: 13px;
   }
-  .tracks-note {
+  .broker-roadmap {
     padding: 0 22px;
-    align-items: flex-start;
-    font-size: 10px;
   }
-  .tracks-note p {
-    padding-top: 3px;
+  .broker-roadmap-list {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+  .broker-roadmap-list::before {
+    top: 14px;
+    right: auto;
+    bottom: 14px;
+    left: 14px;
+    border-top: 0;
+    border-left: 1px dashed #8a8a8a;
+  }
+  .broker-roadmap-step {
+    min-height: 0;
+    grid-template-columns: 30px minmax(0, 1fr);
+    grid-template-rows: auto;
+    justify-items: start;
+    padding: 0 0 24px;
+  }
+  .broker-roadmap-step::after {
+    display: none;
+  }
+  .broker-roadmap-copy,
+  .broker-roadmap-step.is-below .broker-roadmap-copy {
+    max-width: none;
+    grid-row: 1;
+    grid-column: 2;
+    align-self: start;
+    padding: 2px 0 0 10px;
+    text-align: left;
+  }
+  .broker-roadmap-copy h4 {
+    font-size: 11px;
+  }
+  .broker-roadmap-copy p {
+    font-size: 11px;
+  }
+  .broker-roadmap-marker {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .broker-roadmap-step:last-child {
+    padding-bottom: 0;
   }
   .journey-section {
     padding: 66px 0;

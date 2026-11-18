@@ -88,6 +88,33 @@ export const courseFaqs = [
   },
 ];
 
+export const brokerRoadmapSteps = [
+  {
+    title: "Submit an application",
+    description: "Apply for an opportunity to start your Dubai real estate journey.",
+  },
+  {
+    title: "Training",
+    description:
+      "Experience training covering all the information you need about real estate in Dubai.",
+  },
+  {
+    title: "Dubai visit",
+    description:
+      "Meet real-world professionals in Dubai and see where you could work.",
+  },
+  {
+    title: "Employment",
+    description:
+      "Become part of our partner's friendly team, acquire your first clients, and apply your knowledge in practice.",
+  },
+  {
+    title: "First deal",
+    description:
+      "Close your first deal under the guidance of an experienced mentor and appreciate the full broker experience.",
+  },
+];
+
 export const learningSteps = [
   {
     title: "Choose your tier",
@@ -99,14 +126,17 @@ export const learningSteps = [
   },
   {
     title: "Join live learning",
-    description: "Build on your learning through sessions, masterclasses, and webinars.",
+    description:
+      "Build on your learning through sessions, masterclasses, and webinars.",
   },
   {
     title: "Get real-world assistance",
-    description: "Put your learning into context with support from One Stock Academy.",
+    description:
+      "Put your learning into context with support from One Stock Academy.",
   },
   {
     title: "Explore internship opportunities",
-    description: "After course completion, receive assistance exploring opportunities with OneX Properties.",
+    description:
+      "After course completion, receive assistance exploring opportunities with OneX Properties.",
   },
 ];
