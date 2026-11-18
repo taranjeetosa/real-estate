@@ -1596,6 +1596,21 @@ input:focus-visible {
   border-color: var(--blue-deep);
   box-shadow: 0 0 0 3px rgba(36, 78, 216, 0.16);
 }
+.enquiry-form #full-name.is-arrival-highlight {
+  animation: enquiry-name-arrival 8s ease-in-out;
+}
+@keyframes enquiry-name-arrival {
+  0%,
+  100% {
+    border-width: 1px;
+    box-shadow: 0 0 0 3px rgba(36, 78, 216, 0.16);
+  }
+  40%,
+  60% {
+    border-width: 3px;
+    box-shadow: 0 0 0 5px rgba(36, 78, 216, 0.3);
+  }
+}
 .enquiry-form input::placeholder {
   color: var(--muted);
 }
@@ -1821,11 +1836,13 @@ input:focus-visible {
     box-shadow 0.3s ease;
   transition-delay: calc(var(--step-order) * 0.5s);
 }
-.broker-roadmap-step.is-reached .broker-roadmap-marker {
-  background: var(--blue-deep);
+.broker-roadmap-step:first-child .broker-roadmap-marker {
   box-shadow:
     0 0 0 4px var(--paper),
     0 0 0 6px var(--blue-deep);
+}
+.broker-roadmap-step.is-reached .broker-roadmap-marker {
+  background: var(--blue-deep);
 }
 
 .journey-section {

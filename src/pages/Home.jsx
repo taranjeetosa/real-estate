@@ -1080,6 +1080,7 @@ function InterestForm({
   onTrackChange,
   sending,
   submitted,
+  nameArrivalActive,
   error,
   onReset,
 }) {
@@ -1111,6 +1112,7 @@ function InterestForm({
       <label htmlFor="full-name">Your name</label>
       <input
         id="full-name"
+        className={nameArrivalActive ? "is-arrival-highlight" : undefined}
         name="name"
         type="text"
         autoComplete="name"
@@ -1205,6 +1207,7 @@ function CourseEnrollmentCard({
   onTrackChange,
   onRoadmapProgress,
   onRoadmapReset,
+  nameArrivalActive,
 }) {
   const formRef = useRef(null);
   const { handleSubmit, resetSubmission, sending, submitted, error } =
@@ -1235,6 +1238,7 @@ function CourseEnrollmentCard({
           onTrackChange={onTrackChange}
           sending={sending}
           submitted={submitted}
+          nameArrivalActive={nameArrivalActive}
           error={error}
           onReset={resetEnquiry}
         />
@@ -1248,10 +1252,27 @@ export default function Home() {
   const [selectedTrack, setSelectedTrack] = useState(specialistTracks[0].title);
   const [activeTrack, setActiveTrack] = useState(null);
   const [roadmapProgress, setRoadmapProgress] = useState(false);
+  const [nameArrivalActive, setNameArrivalActive] = useState(false);
+  const nameArrivalTimeoutRef = useRef(null);
   const closeTrackModal = useCallback(() => setActiveTrack(null), []);
 
-  function goToEnquiry(track) {
+  useEffect(
+    () => () => window.clearTimeout(nameArrivalTimeoutRef.current),
+    [],
+  );
+
+  function goToEnquiry(track, highlightName = false) {
     if (track) setSelectedTrack(track);
+    const nameInput = document.querySelector(".enquiry-form #full-name");
+    if (highlightName && nameInput) {
+      window.clearTimeout(nameArrivalTimeoutRef.current);
+      setNameArrivalActive(true);
+      nameArrivalTimeoutRef.current = window.setTimeout(
+        () => setNameArrivalActive(false),
+        5000,
+      );
+    }
+    nameInput?.focus({ preventScroll: true });
     document.getElementById("enquire").scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
         ? "auto"
@@ -1275,7 +1296,7 @@ export default function Home() {
         <AiCourseHero onGetStarted={() => goToEnquiry()} />
         <PathwayCarousel
           onViewCurriculum={openTrackSyllabus}
-          onGetStarted={goToEnquiry}
+          onGetStarted={(track) => goToEnquiry(track, true)}
         />
         <AlumniGallery />
         <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
@@ -1293,6 +1314,7 @@ export default function Home() {
               onTrackChange={setSelectedTrack}
               onRoadmapProgress={() => setRoadmapProgress(true)}
               onRoadmapReset={() => setRoadmapProgress(false)}
+              nameArrivalActive={nameArrivalActive}
             />
           </aside>
         </div>
