@@ -822,7 +822,7 @@ function WhyChooseAcademy() {
     </section>
   );
 }
-function ChooseYourPathSection() {
+function ChooseYourPathSection({ roadmapProgress }) {
   return (
     <section className="tracks-section" id="tracks">
       <div className="section tracks-heading">
@@ -835,19 +835,61 @@ function ChooseYourPathSection() {
           </h2>
         </div>
       </div>
-      <BrokerRoadmap />
+      <BrokerRoadmap isProgressing={roadmapProgress} />
     </section>
   );
 }
 
-function BrokerRoadmap() {
+function BrokerRoadmap({ isProgressing }) {
   return (
-    <div className="broker-roadmap">
+    <div className={`broker-roadmap${isProgressing ? " is-progressing" : ""}`}>
+      <svg
+        className="broker-roadmap-track broker-roadmap-track-desktop"
+        viewBox="0 0 1000 320"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path
+          className="broker-roadmap-track-dotted"
+          d="M 1000 120 C 960 120 940 120 890 120"
+        />
+        <path
+          className="broker-roadmap-track-base"
+          d="M 890 120 C 792.5 120 792.5 220 695 220 C 597.5 220 597.5 120 500 120 C 402.5 120 402.5 220 305 220 C 207.5 220 207.5 120 110 120"
+        />
+        <path
+          className="broker-roadmap-track-dotted"
+          d="M 110 120 C 60 120 40 220 0 220"
+        />
+        <path
+          className="broker-roadmap-track-progress"
+          d="M 1000 120 C 960 120 940 120 890 120"
+        />
+      </svg>
+      <svg
+        className="broker-roadmap-track broker-roadmap-track-mobile"
+        viewBox="0 0 40 600"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path className="broker-roadmap-track-dotted" d="M 15 0 L 15 60" />
+        <path
+          className="broker-roadmap-track-base"
+          d="M 15 60 L 15 180 L 15 300 L 15 420 L 15 540"
+        />
+        <path className="broker-roadmap-track-dotted" d="M 15 540 L 15 600" />
+        <path className="broker-roadmap-track-progress" d="M 15 0 L 15 60" />
+      </svg>
       <ol className="broker-roadmap-list" aria-label="Broker career roadmap">
         {brokerRoadmapSteps.map(({ title, description }, index) => (
           <li
-            className={`broker-roadmap-step${index % 2 ? " is-below" : " is-above"}`}
+            className={`broker-roadmap-step${index % 2 ? " is-below" : " is-above"}${isProgressing && index === 0 ? " is-reached" : ""}`}
             key={title}
+            style={{
+              "--step-x": `${89 - index * 19.5}%`,
+              "--step-y": index % 2 ? "68.75%" : "37.5%",
+              "--step-order": index,
+            }}
           >
             <div className="broker-roadmap-copy">
               <h4>{title}</h4>
@@ -1158,10 +1200,20 @@ function WhoThisIsForCard() {
   );
 }
 
-function CourseEnrollmentCard({ selectedTrack, onTrackChange }) {
+function CourseEnrollmentCard({
+  selectedTrack,
+  onTrackChange,
+  onRoadmapProgress,
+  onRoadmapReset,
+}) {
   const formRef = useRef(null);
   const { handleSubmit, resetSubmission, sending, submitted, error } =
-    useLeadSheetSubmission({ formRef });
+    useLeadSheetSubmission({ formRef, onSubmitted: onRoadmapProgress });
+
+  function resetEnquiry() {
+    resetSubmission();
+    onRoadmapReset();
+  }
 
   return (
     <section
@@ -1184,7 +1236,7 @@ function CourseEnrollmentCard({ selectedTrack, onTrackChange }) {
           sending={sending}
           submitted={submitted}
           error={error}
-          onReset={resetSubmission}
+          onReset={resetEnquiry}
         />
       </form>
       <WhoThisIsForCard />
@@ -1195,6 +1247,7 @@ function CourseEnrollmentCard({ selectedTrack, onTrackChange }) {
 export default function Home() {
   const [selectedTrack, setSelectedTrack] = useState(specialistTracks[0].title);
   const [activeTrack, setActiveTrack] = useState(null);
+  const [roadmapProgress, setRoadmapProgress] = useState(false);
   const closeTrackModal = useCallback(() => setActiveTrack(null), []);
 
   function goToEnquiry(track) {
@@ -1224,12 +1277,13 @@ export default function Home() {
           onViewCurriculum={openTrackSyllabus}
           onGetStarted={goToEnquiry}
         />
-        <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
         <AlumniGallery />
+        <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
+
         <WhyChooseAcademy />
         <div className="course-followup-layout">
           <div className="course-followup-content">
-            <ChooseYourPathSection />
+            <ChooseYourPathSection roadmapProgress={roadmapProgress} />
             <CourseJourney onGetStarted={() => goToEnquiry()} />
             <CourseFaq />
           </div>
@@ -1237,6 +1291,8 @@ export default function Home() {
             <CourseEnrollmentCard
               selectedTrack={selectedTrack}
               onTrackChange={setSelectedTrack}
+              onRoadmapProgress={() => setRoadmapProgress(true)}
+              onRoadmapReset={() => setRoadmapProgress(false)}
             />
           </aside>
         </div>

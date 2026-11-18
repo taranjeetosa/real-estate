@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL || "";
 const RESPONSE_TIMEOUT_MS = 20000;
 
-export default function useLeadSheetSubmission({ formRef }) {
+export default function useLeadSheetSubmission({ formRef, onSubmitted }) {
   const [sending, setSending] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -38,6 +38,7 @@ export default function useLeadSheetSubmission({ formRef }) {
         setError(body.message || "We couldn't send your request. Please try again or contact our team.");
       } else {
         setSubmitted(true);
+        onSubmitted?.();
       }
     } catch (submissionError) {
       setError(

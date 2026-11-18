@@ -699,14 +699,12 @@ input:focus-visible {
   z-index: 0;
   inset: 0;
   content: "";
-  background:
-    linear-gradient(
-      180deg,
-      rgba(8, 8, 8, 0.12) 5%,
-      rgba(8, 8, 8, 0.08) 30%,
-      rgba(8, 8, 8, 0.78) 100%
-    ),
-    linear-gradient(120deg, rgba(23, 67, 182, 0.68), rgba(11, 24, 52, 0.16));
+  background: linear-gradient(
+    180deg,
+    rgba(8, 8, 8, 0.12) 5%,
+    rgba(8, 8, 8, 0.08) 30%,
+    rgba(8, 8, 8, 0.78) 100%
+  );
 }
 .pathway-card-artwork img {
   position: absolute;
@@ -1718,62 +1716,78 @@ input:focus-visible {
 }
 
 .broker-roadmap {
+  position: relative;
   max-width: 1300px;
   margin: 0 auto;
   padding: 0 32px;
 }
+.broker-roadmap-track {
+  position: absolute;
+  z-index: 0;
+  inset: 0 32px;
+  width: calc(100% - 64px);
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.broker-roadmap-track-mobile {
+  display: none;
+}
+.broker-roadmap-track path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.broker-roadmap-track-base {
+  stroke: #252526;
+  stroke-width: 1.5;
+}
+.broker-roadmap-track-dotted {
+  stroke: #252526;
+  stroke-width: 2;
+  stroke-dasharray: 2 6;
+}
+.broker-roadmap-track-progress {
+  stroke: var(--blue-deep);
+  stroke-width: 5;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: stroke-dashoffset 1.3s cubic-bezier(0.2, 0.7, 0.15, 1);
+}
+.broker-roadmap.is-progressing .broker-roadmap-track-progress {
+  stroke-dashoffset: 0;
+}
 .broker-roadmap-list {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  height: 430px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.broker-roadmap-list::before {
-  position: absolute;
-  top: 50%;
-  right: 9%;
-  left: 9%;
-  border-top: 1px dashed #8a8a8a;
-  content: "";
-}
 .broker-roadmap-step {
-  position: relative;
-  display: grid;
-  min-width: 0;
-  min-height: 310px;
-  grid-template-rows: minmax(0, 1fr) 30px minmax(0, 1fr);
-  justify-items: center;
-}
-.broker-roadmap-step::after {
   position: absolute;
-  z-index: 1;
-  left: 50%;
-  width: 1px;
-  background: #999999;
-  content: "";
-}
-.broker-roadmap-step.is-above::after {
-  top: calc(50% - 35px);
-  height: 21px;
-}
-.broker-roadmap-step.is-below::after {
-  top: calc(50% + 14px);
-  height: 21px;
+  display: grid;
+  top: var(--step-y);
+  left: var(--step-x);
+  width: 21%;
+  transform: translate(-50%, -50%);
+  place-items: center;
 }
 .broker-roadmap-copy {
+  position: absolute;
+  right: 0;
+  left: 0;
   width: 100%;
   max-width: 210px;
-  grid-row: 1;
-  align-self: end;
-  padding: 0 10px 22px;
+  margin: 0 auto;
   text-align: center;
 }
+.broker-roadmap-step.is-above .broker-roadmap-copy {
+  bottom: calc(100% + 24px);
+}
 .broker-roadmap-step.is-below .broker-roadmap-copy {
-  grid-row: 3;
-  align-self: start;
-  padding: 22px 10px 0;
+  top: calc(100% + 24px);
 }
 .broker-roadmap-copy h4 {
   margin: 0 0 7px;
@@ -1791,17 +1805,27 @@ input:focus-visible {
   line-height: 1.65;
 }
 .broker-roadmap-marker {
+  position: relative;
   z-index: 2;
   display: grid;
   width: 30px;
   height: 30px;
-  grid-row: 2;
   place-items: center;
   border-radius: 50%;
   background: var(--ink);
   color: var(--white);
   font-size: 11px;
   font-weight: 700;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+  transition-delay: calc(var(--step-order) * 0.5s);
+}
+.broker-roadmap-step.is-reached .broker-roadmap-marker {
+  background: var(--blue-deep);
+  box-shadow:
+    0 0 0 4px var(--paper),
+    0 0 0 6px var(--blue-deep);
 }
 
 .journey-section {
@@ -2580,35 +2604,42 @@ input:focus-visible {
   .broker-roadmap {
     padding: 0 22px;
   }
+  .broker-roadmap-track-desktop {
+    display: none;
+  }
+  .broker-roadmap-track-mobile {
+    display: block;
+    inset: 0 auto auto 22px;
+    width: 40px;
+    height: 600px;
+  }
   .broker-roadmap-list {
-    grid-template-columns: 1fr;
+    display: grid;
+    height: 600px;
+    grid-template-rows: repeat(5, 120px);
     margin-top: 0;
   }
-  .broker-roadmap-list::before {
-    top: 14px;
-    right: auto;
-    bottom: 14px;
-    left: 14px;
-    border-top: 0;
-    border-left: 1px dashed #8a8a8a;
-  }
   .broker-roadmap-step {
-    min-height: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    transform: none;
     grid-template-columns: 30px minmax(0, 1fr);
-    grid-template-rows: auto;
-    justify-items: start;
-    padding: 0 0 24px;
-  }
-  .broker-roadmap-step::after {
-    display: none;
+    place-items: center stretch;
   }
   .broker-roadmap-copy,
   .broker-roadmap-step.is-below .broker-roadmap-copy {
+    position: static;
+    top: auto;
+    right: auto;
+    left: auto;
     max-width: none;
-    grid-row: 1;
+    width: auto;
+    margin: 0;
+    transform: none;
     grid-column: 2;
-    align-self: start;
-    padding: 2px 0 0 10px;
+    grid-row: 1;
     text-align: left;
   }
   .broker-roadmap-copy h4 {
@@ -2618,11 +2649,11 @@ input:focus-visible {
     font-size: 11px;
   }
   .broker-roadmap-marker {
-    grid-row: 1;
     grid-column: 1;
-  }
-  .broker-roadmap-step:last-child {
-    padding-bottom: 0;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    transition-delay: calc(var(--step-order) * 0.5s);
   }
   .journey-section {
     padding: 66px 0;
