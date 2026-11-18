@@ -5,6 +5,7 @@ export const specialistTracks = [
     title: "AI for Real Estate Professional",
     duration: "5 weeks",
     level: "Beginner to intermediate",
+    image: "/pexels-thisisengineering-3913031.jpg",
     focus: "Build practical skills in property tools, digital workflows, and client engagement.",
     description:
       "Build core skills with AI-enabled property tools, digital workflows, and client engagement practices.",
@@ -14,6 +15,7 @@ export const specialistTracks = [
     title: "AI for Real Estate Manager",
     duration: "4 weeks",
     level: "Beginner to intermediate",
+    image: "/executive-slider.jpeg",
     focus: "Develop AI-supported real estate marketing campaigns and client engagement.",
     description:
       "Plan and improve AI-supported marketing campaigns to attract, convert, and retain property clients.",
@@ -23,6 +25,7 @@ export const specialistTracks = [
     title: "AI for Real Estate Expert",
     duration: "6 weeks",
     level: "Intermediate to expert",
+    image: "/pexels-mikhail-nilov-7988217.jpg",
     focus: "Apply market intelligence, predictive trends, and growth strategies.",
     description:
       "Apply market intelligence, predictive trends, and scalable growth strategies to real estate decisions.",

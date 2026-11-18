@@ -125,19 +125,16 @@ export default function LeadPopup() {
   const launcherRef = useRef(null);
   const nameRef = useRef(null);
   const formRef = useRef(null);
-  const responseFrameRef = useRef(null);
-  const requestIdInputRef = useRef(null);
   const autoOpenCancelledRef = useRef(false);
   const viewedEnquiryRef = useRef(false);
   const enquiryVisibleRef = useRef(false);
   const {
-    actionUrl,
     handleSubmit,
     resetSubmission,
     sending,
     submitted,
     error: submissionError,
-  } = useLeadSheetSubmission({ formRef, responseFrameRef, requestIdInputRef });
+  } = useLeadSheetSubmission({ formRef });
 
   useEffect(() => {
     const enquiryForm = document.querySelector("#enquire .enquiry-form");
@@ -235,12 +232,8 @@ export default function LeadPopup() {
           ) : (
             <form
               ref={formRef}
-              action={actionUrl}
-              method="post"
-              target="popup-lead-sheet-response"
               onSubmit={handleSubmit}
             >
-              <input ref={requestIdInputRef} name="requestId" type="hidden" />
               <input name="source" type="hidden" value="lead-popup" />
               <label className="lead-popup-honeypot" aria-hidden="true">
                 Website
@@ -335,12 +328,6 @@ export default function LeadPopup() {
         <span className="lead-popup-ping" aria-hidden="true" />
         {open ? <X size={22} /> : <Phone size={23} />}
       </button>
-      <iframe
-        ref={responseFrameRef}
-        className="lead-popup-response-frame"
-        name="popup-lead-sheet-response"
-        title="Lead submission response"
-      />
     </div>
   );
 }

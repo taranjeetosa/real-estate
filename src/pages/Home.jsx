@@ -97,24 +97,41 @@ function AiCourseHero({ onGetStarted }) {
       <div className="hero-grid">
         <div className="hero-copy">
           <p className="eyebrow hero-eyebrow">REAL ESTATE CAREER IN DUBAI</p>
-          <h1>Turn AI<br />for <span>Real Estate.</span></h1>
+          <h1>
+            Turn AI
+            <br />
+            for <span>Real Estate.</span>
+          </h1>
           <p className="hero-description">
-            Build practical skills in property data, AI-supported marketing,
-            and market intelligence through three real estate learning pathways.
+            Build practical skills in property data, AI-supported marketing, and
+            market intelligence through three real estate learning pathways.
           </p>
           <div className="hero-actions">
-            <button className="button button-primary" type="button" onClick={onGetStarted}>
+            <button
+              className="button button-primary"
+              type="button"
+              onClick={onGetStarted}
+            >
               Choose your tier <ArrowRight size={17} />
             </button>
-            <a className="text-link" href="#tracks">Explore learning pathways <ArrowDown size={16} /></a>
+            <a className="text-link" href="#tracks">
+              Explore learning pathways <ArrowDown size={16} />
+            </a>
           </div>
           <div className="hero-proof">
-            <span className="proof-icon"><Check size={15} /></span>
-            Practical AI for property work <span className="proof-separator">·</span> Three career tiers
+            <span className="proof-icon">
+              <Check size={15} />
+            </span>
+            Practical AI for property work{" "}
+            <span className="proof-separator">·</span> Three career tiers
           </div>
         </div>
 
-        <div className="hero-visual" role="img" aria-label="Real estate AI learning pathway">
+        <div
+          className="hero-visual"
+          role="img"
+          aria-label="Real estate AI learning pathway"
+        >
           <div className="visual-orbit orbit-one" />
           <div className="visual-orbit orbit-two" />
           <div className="visual-glow" />
@@ -123,21 +140,40 @@ function AiCourseHero({ onGetStarted }) {
               <span className="live-dot" /> YOUR PROPERTY SKILLS
               <span className="visual-card-menu">•••</span>
             </div>
-            <div className="visual-brain"><House size={42} strokeWidth={1.5} /></div>
+            <div className="visual-brain">
+              <House size={42} strokeWidth={1.5} />
+            </div>
             <p className="visual-label">AI FOR REAL ESTATE</p>
-            <h2>Read the market.<br />Move forward.</h2>
-            <div className="visual-progress"><span /></div>
-            <div className="visual-card-footer"><span>YOUR LEARNING PATH</span><span>01 — 03</span></div>
+            <h2>
+              Read the market.
+              <br />
+              Move forward.
+            </h2>
+            <div className="visual-progress">
+              <span />
+            </div>
+            <div className="visual-card-footer">
+              <span>YOUR LEARNING PATH</span>
+              <span>01 — 03</span>
+            </div>
           </div>
-          <div className="float-chip chip-top"><Sparkles size={16} /> Property-focused AI</div>
-          <div className="float-chip chip-bottom"><BriefcaseBusiness size={17} /> OneX Properties support</div>
+          <div className="float-chip chip-top">
+            <Sparkles size={16} /> Property-focused AI
+          </div>
+          <div className="float-chip chip-bottom">
+            <BriefcaseBusiness size={17} /> OneX Properties support
+          </div>
           <div className="visual-star star-one">✳</div>
           <div className="visual-star star-two">✳</div>
         </div>
       </div>
       <CourseOverviewStats />
       <div className="hero-bottom">
-        <span>ONE STOCK ACADEMY</span><span className="hero-bottom-line" /><span>THREE LEARNING PATHWAYS</span><span className="hero-bottom-line" /><span>BUILT FOR REAL ESTATE</span>
+        <span>ONE STOCK ACADEMY</span>
+        <span className="hero-bottom-line" />
+        <span>THREE LEARNING PATHWAYS</span>
+        <span className="hero-bottom-line" />
+        <span>BUILT FOR REAL ESTATE</span>
       </div>
     </section>
   );
@@ -145,20 +181,261 @@ function AiCourseHero({ onGetStarted }) {
 
 function CourseOverviewStats() {
   const highlights = [
-    { title: "3 pathways", detail: "Professional, Manager, Expert", icon: Target },
-    { title: "4–6 weeks", detail: "depending on your chosen tier", icon: Clock3 },
+    {
+      title: "3 pathways",
+      detail: "Professional, Manager, Expert",
+      icon: Target,
+    },
+    {
+      title: "4–6 weeks",
+      detail: "depending on your chosen tier",
+      icon: Clock3,
+    },
     { title: "Practical AI", detail: "for property workflows", icon: House },
-    { title: "Internship support", detail: "after course completion", icon: BriefcaseBusiness },
+    {
+      title: "Internship support",
+      detail: "after course completion",
+      icon: BriefcaseBusiness,
+    },
   ];
 
   return (
-    <section className="stats-strip" aria-label="Real estate programme highlights">
+    <section
+      className="stats-strip"
+      aria-label="Real estate programme highlights"
+    >
       {highlights.map(({ title, detail, icon: Icon }) => (
         <div className="stat" key={title}>
-          <span className="stat-icon"><Icon size={20} /></span>
-          <span><strong>{title}</strong><small>{detail}</small></span>
+          <span className="stat-icon">
+            <Icon size={20} />
+          </span>
+          <span>
+            <strong>{title}</strong>
+            <small>{detail}</small>
+          </span>
         </div>
       ))}
+    </section>
+  );
+}
+
+function PathwayCarousel({ onViewCurriculum, onGetStarted }) {
+  const viewportRef = useRef(null);
+  const activeIndexRef = useRef(0);
+  const interactionPausedRef = useRef(false);
+  const resumeAutoplayTimeoutRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  function scrollToCard(index, behavior = "smooth") {
+    const viewport = viewportRef.current;
+    const targetCard = viewport?.querySelectorAll(".pathway-card")[index];
+    if (!viewport || !targetCard) return;
+
+    const targetLeft =
+      targetCard.getBoundingClientRect().left -
+      viewport.getBoundingClientRect().left +
+      viewport.scrollLeft;
+
+    viewport.scrollTo({ left: targetLeft, behavior });
+  }
+
+  function pauseAutoplay() {
+    interactionPausedRef.current = true;
+    window.clearTimeout(resumeAutoplayTimeoutRef.current);
+    resumeAutoplayTimeoutRef.current = window.setTimeout(() => {
+      interactionPausedRef.current = false;
+    }, 8000);
+  }
+
+  function updateActiveCard() {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    const viewportCenter =
+      viewport.getBoundingClientRect().left + viewport.clientWidth / 2;
+    const cards = [...viewport.querySelectorAll(".pathway-card")];
+    const closestCardIndex = cards.reduce(
+      (closestIndex, card, index) => {
+        const cardCenter =
+          card.getBoundingClientRect().left + card.offsetWidth / 2;
+        const closestCard = cards[closestIndex];
+        const closestCenter =
+          closestCard.getBoundingClientRect().left + closestCard.offsetWidth / 2;
+        return Math.abs(cardCenter - viewportCenter) <
+          Math.abs(closestCenter - viewportCenter)
+          ? index
+          : closestIndex;
+      },
+      0,
+    );
+
+    if (closestCardIndex !== activeIndexRef.current) {
+      activeIndexRef.current = closestCardIndex;
+      setActiveIndex(closestCardIndex);
+    }
+  }
+
+  function moveCarousel(direction) {
+    const nextIndex =
+      (activeIndexRef.current + direction + specialistTracks.length) %
+      specialistTracks.length;
+    const isWrapping =
+      (direction > 0 && nextIndex === 0) ||
+      (direction < 0 && activeIndexRef.current === 0);
+
+    pauseAutoplay();
+    activeIndexRef.current = nextIndex;
+    setActiveIndex(nextIndex);
+    scrollToCard(
+      nextIndex,
+      isWrapping ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    );
+  }
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      const viewport = viewportRef.current;
+      const viewportBounds = viewport?.getBoundingClientRect();
+      if (
+        !window.matchMedia("(max-width: 700px)").matches ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+        document.visibilityState !== "visible" ||
+        !viewportBounds ||
+        viewportBounds.bottom <= 0 ||
+        viewportBounds.top >= window.innerHeight ||
+        interactionPausedRef.current
+      ) {
+        return;
+      }
+
+      const nextIndex = (activeIndexRef.current + 1) % specialistTracks.length;
+      const isWrapping = nextIndex === 0;
+      activeIndexRef.current = nextIndex;
+      setActiveIndex(nextIndex);
+      scrollToCard(nextIndex, isWrapping ? "auto" : "smooth");
+    }, 6000);
+
+    return () => {
+      window.clearInterval(intervalId);
+      window.clearTimeout(resumeAutoplayTimeoutRef.current);
+    };
+  }, []);
+
+  return (
+    <section
+      className="pathway-preview"
+      aria-labelledby="pathway-preview-title"
+    >
+      <div className="pathway-carousel-shell">
+        <div className="pathway-carousel-heading">
+          <div>
+            <p className="section-kicker">FIND YOUR FIT</p>
+            <h2 id="pathway-preview-title">
+              A pathway for your <span>next move.</span>
+            </h2>
+            <p className="pathway-preview-intro">
+              Choose a focused programme to build practical AI skills for your
+              work in real estate.
+            </p>
+          </div>
+        </div>
+
+        <div className="pathway-carousel-toolbar">
+          <span className="pathway-carousel-count">
+            {String(activeIndex + 1).padStart(2, "0")}{" "}
+            <span>/ {String(specialistTracks.length).padStart(2, "0")}</span>
+          </span>
+          <div className="pathway-carousel-controls">
+            <button
+              className="pathway-carousel-arrow"
+              type="button"
+              aria-label="Previous learning pathway"
+              onClick={() => moveCarousel(-1)}
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              className="pathway-carousel-arrow"
+              type="button"
+              aria-label="Next learning pathway"
+              onClick={() => moveCarousel(1)}
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        <div
+          className="pathway-carousel-viewport"
+          ref={viewportRef}
+          onScroll={updateActiveCard}
+          onPointerDown={pauseAutoplay}
+          onFocusCapture={pauseAutoplay}
+          role="region"
+          aria-label="Learning pathway carousel"
+          tabIndex={0}
+        >
+          <div className="pathway-carousel-track">
+            {specialistTracks.map(
+              ({ title, duration, level, image, focus }, index) => (
+                <article className="pathway-card" key={title}>
+                  <div className="pathway-card-artwork">
+                    <img src={image} alt="" loading="lazy" />
+                    <div className="pathway-card-artwork-content">
+                      <span className="pathway-card-index">
+                        PATHWAY 0{index + 1}
+                      </span>
+                      <h3>{title}</h3>
+                    </div>
+                  </div>
+                  <div className="pathway-card-body">
+                    <div>
+                      <p className="pathway-card-label">FOCUS</p>
+                      <p className="pathway-card-focus">{focus}</p>
+                      <div className="pathway-card-tags">
+                        <span>
+                          <Clock3 size={13} aria-hidden="true" />
+                          {duration}
+                        </span>
+                        <span>
+                          <BriefcaseBusiness size={13} aria-hidden="true" />
+                          {level}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="pathway-card-outcome">
+                      <p className="pathway-card-label">OUTCOME</p>
+                      <p>
+                        <Check size={15} aria-hidden="true" />
+                        Course-completion certificate from One Stock Academy
+                      </p>
+                    </div>
+                    <div className="pathway-card-actions">
+                      <button
+                        className="pathway-card-primary"
+                        type="button"
+                        onClick={() => onViewCurriculum(title)}
+                      >
+                        View Curriculum
+                      </button>
+                      <button
+                        className="pathway-card-secondary"
+                        type="button"
+                        onClick={() => onGetStarted(title)}
+                      >
+                        Get AI Certified Now
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ),
+            )}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -168,22 +445,38 @@ function AiAcademyOverview({ onGetStarted }) {
     <section className="section about-section" id="about">
       <div className="section-heading">
         <p className="section-kicker">REAL ESTATE, WITH AI IN PRACTICE</p>
-        <h2>Market insight meets <span>property work.</span></h2>
+        <h2>
+          Market insight meets <span>property work.</span>
+        </h2>
       </div>
       <div className="about-content">
         <p className="about-lead">
           Real estate learning from{" "}
-          <span className="powered-by-highlight">One Stock Academy</span>, associated partner of OneX Properties.
+          <span className="powered-by-highlight">One Stock Academy</span>,
+          associated partner of OneX Properties.
         </p>
         <div className="about-detail">
-          <p>One Stock Academy is an associated partner of OneX Properties. The programme explores how AI can support property analysis, marketing, client engagement, and investment decisions, with practical real-world assistance. After course completion, learners can receive assistance exploring internship opportunities with OneX Properties.</p>
-          <button className="inline-link" type="button" onClick={onGetStarted}>Choose your tier <ArrowRight size={16} /></button>
+          <p>
+            One Stock Academy is an associated partner of OneX Properties. The
+            programme explores how AI can support property analysis, marketing,
+            client engagement, and investment decisions, with practical
+            real-world assistance. After course completion, learners can receive
+            assistance exploring internship opportunities with OneX Properties.
+          </p>
+          <button className="inline-link" type="button" onClick={onGetStarted}>
+            Choose your tier <ArrowRight size={16} />
+          </button>
         </div>
       </div>
       <div className="benefit-grid">
         {courseBenefits.map(({ title, description, icon: Icon }, index) => (
           <article className="benefit-card" key={title}>
-            <div className="benefit-top"><span className="benefit-icon"><Icon size={20} /></span><span className="benefit-number">0{index + 1}</span></div>
+            <div className="benefit-top">
+              <span className="benefit-icon">
+                <Icon size={20} />
+              </span>
+              <span className="benefit-number">0{index + 1}</span>
+            </div>
             <h3>{title}</h3>
             <p>{description}</p>
           </article>
@@ -202,15 +495,18 @@ function AlumniGallery() {
     }
 
     const intervalId = window.setInterval(() => {
-      setActiveIndex((currentIndex) => (currentIndex + 1) % alumniImages.length);
+      setActiveIndex(
+        (currentIndex) => (currentIndex + 1) % alumniImages.length,
+      );
     }, 3500);
 
     return () => window.clearInterval(intervalId);
   }, []);
 
   function showImage(direction) {
-    setActiveIndex((currentIndex) =>
-      (currentIndex + direction + alumniImages.length) % alumniImages.length,
+    setActiveIndex(
+      (currentIndex) =>
+        (currentIndex + direction + alumniImages.length) % alumniImages.length,
     );
   }
 
@@ -220,8 +516,14 @@ function AlumniGallery() {
   }
 
   return (
-    <section className="alumni-section" id="alumni" aria-labelledby="alumni-title">
-      <h2 className="alumni-title" id="alumni-title">Our Alum<span>ni</span></h2>
+    <section
+      className="alumni-section"
+      id="alumni"
+      aria-labelledby="alumni-title"
+    >
+      <h2 className="alumni-title" id="alumni-title">
+        Our Alum<span>ni</span>
+      </h2>
       <div
         className="alumni-viewport"
         role="region"
@@ -233,9 +535,11 @@ function AlumniGallery() {
         <div className="alumni-track">
           {[-1, 0, 1].map((offset) => {
             const imageIndex =
-              (activeIndex + offset + alumniImages.length) % alumniImages.length;
+              (activeIndex + offset + alumniImages.length) %
+              alumniImages.length;
             const { id, image } = alumniImages[imageIndex];
-            const position = offset === 0 ? "active" : offset < 0 ? "previous" : "next";
+            const position =
+              offset === 0 ? "active" : offset < 0 ? "previous" : "next";
 
             return (
               <article
@@ -264,7 +568,8 @@ function AlumniGallery() {
           <ChevronLeft size={17} />
         </button>
         <span className="alumni-counter" aria-live="polite">
-          {String(activeIndex + 1).padStart(2, "0")} / {String(alumniImages.length).padStart(2, "0")}
+          {String(activeIndex + 1).padStart(2, "0")} /{" "}
+          {String(alumniImages.length).padStart(2, "0")}
         </span>
         <button
           className="alumni-arrow"
@@ -298,7 +603,8 @@ function TestimonialsCarousel() {
       paused ||
       playingTestimonial !== null ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) return undefined;
+    )
+      return undefined;
 
     let frame = 0;
     const scrollContinuously = () => {
@@ -314,9 +620,12 @@ function TestimonialsCarousel() {
     return () => cancelAnimationFrame(frame);
   }, [paused, playingTestimonial]);
 
-  useEffect(() => () => {
-    if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+    },
+    [],
+  );
 
   function pauseBriefly() {
     setPaused(true);
@@ -378,7 +687,8 @@ function TestimonialsCarousel() {
         onTouchEnd={pauseBriefly}
         onFocusCapture={() => setPaused(true)}
         onBlurCapture={(event) => {
-          if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false);
+          if (!event.currentTarget.contains(event.relatedTarget))
+            setPaused(false);
         }}
       >
         <div className="testimonial-track" ref={trackRef}>
@@ -389,57 +699,75 @@ function TestimonialsCarousel() {
               aria-hidden={copyIndex > 0}
               inert={copyIndex > 0}
             >
-              {publishedTestimonials.map(({ id, name, role, text, image, videoId }) => {
-                const isPlaying =
-                  playingTestimonial?.id === id && playingTestimonial.copyIndex === copyIndex;
+              {publishedTestimonials.map(
+                ({ id, name, role, text, image, videoId }) => {
+                  const isPlaying =
+                    playingTestimonial?.id === id &&
+                    playingTestimonial.copyIndex === copyIndex;
 
-                return (
-                  <article className="testimonial-card" key={`${id}-${copyIndex}`}>
-                    {isPlaying ? (
-                      <>
-                        <iframe
-                          className="testimonial-video"
-                          src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&controls=0&rel=0`}
-                          title={`${name}'s One Stock Academy testimonial`}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                        <button
-                          className="testimonial-video-close"
-                          type="button"
-                          aria-label={`Close ${name}'s video`}
-                          onClick={() => setPlayingTestimonial(null)}
-                        >
-                          <X size={18} />
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <img className="testimonial-poster" src={image} alt="" loading="lazy" />
-                        <div className="testimonial-overlay" aria-hidden="true" />
-                        <div className="testimonial-card-content">
-                          <div className="testimonial-card-heading">
-                            <div>
-                              <p className="testimonial-kicker">ONE STOCK ACADEMY</p>
-                              <h4 className="testimonial-name">{name}</h4>
-                              <p className="testimonial-role">{role}</p>
+                  return (
+                    <article
+                      className="testimonial-card"
+                      key={`${id}-${copyIndex}`}
+                    >
+                      {isPlaying ? (
+                        <>
+                          <iframe
+                            className="testimonial-video"
+                            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&controls=0&rel=0`}
+                            title={`${name}'s One Stock Academy testimonial`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                          <button
+                            className="testimonial-video-close"
+                            type="button"
+                            aria-label={`Close ${name}'s video`}
+                            onClick={() => setPlayingTestimonial(null)}
+                          >
+                            <X size={18} />
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <img
+                            className="testimonial-poster"
+                            src={image}
+                            alt=""
+                            loading="lazy"
+                          />
+                          <div
+                            className="testimonial-overlay"
+                            aria-hidden="true"
+                          />
+                          <div className="testimonial-card-content">
+                            <div className="testimonial-card-heading">
+                              <div>
+                                <p className="testimonial-kicker">
+                                  ONE STOCK ACADEMY
+                                </p>
+                                <h4 className="testimonial-name">{name}</h4>
+                                <p className="testimonial-role">{role}</p>
+                              </div>
+                              <button
+                                className="testimonial-play"
+                                type="button"
+                                aria-label={`Play ${name}'s testimonial`}
+                                onClick={() =>
+                                  setPlayingTestimonial({ id, copyIndex })
+                                }
+                              >
+                                <Play size={18} fill="currentColor" />
+                              </button>
                             </div>
-                            <button
-                              className="testimonial-play"
-                              type="button"
-                              aria-label={`Play ${name}'s testimonial`}
-                              onClick={() => setPlayingTestimonial({ id, copyIndex })}
-                            >
-                              <Play size={18} fill="currentColor" />
-                            </button>
+                            <p className="testimonial-quote">{text}</p>
                           </div>
-                          <p className="testimonial-quote">{text}</p>
-                        </div>
-                      </>
-                    )}
-                  </article>
-                );
-              })}
+                        </>
+                      )}
+                    </article>
+                  );
+                },
+              )}
             </div>
           ))}
         </div>
@@ -455,8 +783,13 @@ function WhyChooseAcademy() {
         <div className="why-left">
           <div className="why-heading">
             <p className="why-kicker">WHY THIS PROGRAMME</p>
-            <h2 id="why-ai-title">Real estate skills for <span>an AI-enabled market.</span></h2>
-            <p>Build practical capability across property data, marketing, and market intelligence.</p>
+            <h2 id="why-ai-title">
+              Real estate skills for <span>an AI-enabled market.</span>
+            </h2>
+            <p>
+              Build practical capability across property data, marketing, and
+              market intelligence.
+            </p>
             <div className="why-actions">
               <a className="button button-primary" href="#tracks">
                 Explore learning pathways <ArrowRight size={16} />
@@ -468,18 +801,22 @@ function WhyChooseAcademy() {
           </div>
 
           <div className="why-grid">
-            {whyChooseReasons.map(({ title, description, icon: Icon }, index) => (
-              <article className="why-card" key={title}>
-                <span className="why-icon"><Icon size={18} /></span>
-                <div className="why-card-copy">
-                  <div className="why-card-heading">
-                    <h3>{title}</h3>
-                    <span className="why-number">0{index + 1}</span>
+            {whyChooseReasons.map(
+              ({ title, description, icon: Icon }, index) => (
+                <article className="why-card" key={title}>
+                  <span className="why-icon">
+                    <Icon size={18} />
+                  </span>
+                  <div className="why-card-copy">
+                    <div className="why-card-heading">
+                      <h3>{title}</h3>
+                      <span className="why-number">0{index + 1}</span>
+                    </div>
+                    <p>{description}</p>
                   </div>
-                  <p>{description}</p>
-                </div>
-              </article>
-            ))}
+                </article>
+              ),
+            )}
           </div>
         </div>
         <TestimonialsCarousel />
@@ -493,24 +830,52 @@ function CourseModules({ onChooseTrack }) {
       <div className="section tracks-heading">
         <div>
           <p className="section-kicker">THREE LEARNING PATHWAYS</p>
-          <h2>Choose your path<br /><span>in real estate.</span></h2>
+          <h2>
+            Choose your path
+            <br />
+            <span>in real estate.</span>
+          </h2>
         </div>
-        <p className="tracks-intro">Choose a programme that fits your experience, from foundational property workflows to strategic market intelligence.</p>
+        <p className="tracks-intro">
+          Choose a programme that fits your experience, from foundational
+          property workflows to strategic market intelligence.
+        </p>
       </div>
       <div className="tracks-grid">
-        {specialistTracks.map(({ title, duration, description, audience }, index) => (
-          <article className="track-card" key={title}>
-            <div className="track-card-top"><span className="track-index">TIER 0{index + 1} · {duration.toUpperCase()}</span></div>
-            <h3>{title}</h3>
-            <p className="track-description">{description}</p>
-            <p className="track-audience">{audience}</p>
-            <button className="track-link" type="button" onClick={() => onChooseTrack(title)} aria-label={`View details for ${title}`}>
-              Tier details <ArrowRight className="track-link-arrow" size={16} />
-            </button>
-          </article>
-        ))}
+        {specialistTracks.map(
+          ({ title, duration, description, audience }, index) => (
+            <article className="track-card" key={title}>
+              <div className="track-card-top">
+                <span className="track-index">
+                  TIER 0{index + 1} · {duration.toUpperCase()}
+                </span>
+              </div>
+              <h3>{title}</h3>
+              <p className="track-description">{description}</p>
+              <p className="track-audience">{audience}</p>
+              <button
+                className="track-link"
+                type="button"
+                onClick={() => onChooseTrack(title)}
+                aria-label={`View details for ${title}`}
+              >
+                Tier details{" "}
+                <ArrowRight className="track-link-arrow" size={16} />
+              </button>
+            </article>
+          ),
+        )}
       </div>
-      <div className="tracks-note"><span className="note-mark"><Sparkles size={17} /></span><p>All three programmes apply AI to real estate practice, with real-world assistance and post-course internship assistance through One Stock Academy&apos;s association with <strong>OneX Properties</strong>.</p></div>
+      <div className="tracks-note">
+        <span className="note-mark">
+          <Sparkles size={17} />
+        </span>
+        <p>
+          All three programmes apply AI to real estate practice, with real-world
+          assistance and post-course internship assistance through One Stock
+          Academy&apos;s association with <strong>OneX Properties</strong>.
+        </p>
+      </div>
     </section>
   );
 }
@@ -546,7 +911,7 @@ function TrackSyllabusModal({ track, onClose, onGetStarted }) {
     if (event.key !== "Tab") return;
 
     const focusableElements = dialogRef.current?.querySelectorAll(
-      'button:not([disabled]), a[href]',
+      "button:not([disabled]), a[href]",
     );
     if (!focusableElements?.length) return;
 
@@ -590,9 +955,15 @@ function TrackSyllabusModal({ track, onClose, onGetStarted }) {
           <FileText size={43} strokeWidth={1.8} />
           <span>PROGRAMME</span>
         </div>
-        <h2 id="track-modal-title">{tier.title} <span>({tier.duration} · {tier.level})</span></h2>
+        <h2 id="track-modal-title">
+          {tier.title}{" "}
+          <span>
+            ({tier.duration} · {tier.level})
+          </span>
+        </h2>
         <p className="track-modal-description">
-          {tier.focus} One Stock Academy also provides real-world assistance and post-course internship assistance with OneX Properties.
+          {tier.focus} One Stock Academy also provides real-world assistance and
+          post-course internship assistance with OneX Properties.
         </p>
         <button
           className="button track-modal-download"
@@ -612,16 +983,37 @@ function CourseJourney({ onGetStarted }) {
       <div className="section journey-content">
         <div>
           <p className="section-kicker">YOUR LEARNING EXPERIENCE</p>
-          <h2>Learn, apply,<br /><span>move forward.</span></h2>
-          <p className="journey-description">Build real estate capability through guided content, practical assistance, and support exploring internship opportunities after course completion.</p>
-          <button className="button button-light" type="button" onClick={onGetStarted}>Register your interest <ArrowRight size={17} /></button>
+          <h2>
+            Learn, apply,
+            <br />
+            <span>move forward.</span>
+          </h2>
+          <p className="journey-description">
+            Build real estate capability through guided content, practical
+            assistance, and support exploring internship opportunities after
+            course completion.
+          </p>
+          <button
+            className="button button-light"
+            type="button"
+            onClick={onGetStarted}
+          >
+            Register your interest <ArrowRight size={17} />
+          </button>
         </div>
         <div className="journey-steps">
           {learningSteps.map(({ title, description }, index) => (
             <div className="journey-step" key={title}>
               <span className="step-count">0{index + 1}</span>
-              <div><h3>{title}</h3><p>{description}</p></div>
-              {index === learningSteps.length - 1 ? <BriefcaseBusiness size={20} /> : <Check size={19} />}
+              <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </div>
+              {index === learningSteps.length - 1 ? (
+                <BriefcaseBusiness size={20} />
+              ) : (
+                <Check size={19} />
+              )}
             </div>
           ))}
         </div>
@@ -635,13 +1027,21 @@ function CourseFaq() {
     <section className="section faq-section" id="faq">
       <div className="faq-heading">
         <p className="section-kicker">GOOD TO KNOW</p>
-        <h2>FAQ<span>s.</span></h2>
-        <p>Find the right real estate learning pathway for your experience and goals.</p>
+        <h2>
+          FAQ<span>s.</span>
+        </h2>
+        <p>
+          Find the right real estate learning pathway for your experience and
+          goals.
+        </p>
       </div>
       <div className="faq-list">
         {courseFaqs.map(({ question, answer }, index) => (
           <details className="faq-item" key={question} open={index === 0}>
-            <summary>{question}<span className="faq-plus">+</span></summary>
+            <summary>
+              {question}
+              <span className="faq-plus">+</span>
+            </summary>
             <p>{answer}</p>
           </details>
         ))}
@@ -661,31 +1061,82 @@ function InterestForm({
   if (submitted) {
     return (
       <div className="form-success" role="status">
-        <span className="success-icon"><Check size={24} /></span>
+        <span className="success-icon">
+          <Check size={24} />
+        </span>
         <h3>Thanks for your interest.</h3>
-        <p>Your details have been added to our enquiry list. One Stock Academy will be in touch.</p>
-        <button className="inline-link" type="button" onClick={onReset}>Submit another enquiry <ArrowRight size={15} /></button>
+        <p>
+          Your details have been added to our enquiry list. One Stock Academy
+          will be in touch.
+        </p>
+        <button className="inline-link" type="button" onClick={onReset}>
+          Submit another enquiry <ArrowRight size={15} />
+        </button>
       </div>
     );
   }
 
   return (
     <>
-      <div className="form-heading"><span>REGISTER YOUR INTEREST</span><h3>Show Interest</h3><p>Share a few details to get started.</p></div>
+      <div className="form-heading">
+        <span>REGISTER YOUR INTEREST</span>
+        <h3>Show Interest</h3>
+        <p>Share a few details to get started.</p>
+      </div>
       <label htmlFor="full-name">Your name</label>
-      <input id="full-name" name="name" type="text" autoComplete="name" placeholder="e.g. Alex Morgan" required />
+      <input
+        id="full-name"
+        name="name"
+        type="text"
+        autoComplete="name"
+        placeholder="e.g. Alex Morgan"
+        required
+      />
       <label htmlFor="email">Email address</label>
-      <input id="email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required />
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autoComplete="email"
+        placeholder="you@example.com"
+        required
+      />
       <label htmlFor="phone">Phone number</label>
-      <input id="phone" name="phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="+91 98765 43210" required />
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        autoComplete="tel"
+        inputMode="tel"
+        placeholder="+91 98765 43210"
+        required
+      />
       <label htmlFor="track">Choose a learning pathway</label>
-      <select id="track" name="track" value={selectedTrack} onChange={(event) => onTrackChange(event.target.value)}>
-        {specialistTracks.map((track) => <option key={track.title} value={track.title}>{track.title}</option>)}
+      <select
+        id="track"
+        name="track"
+        value={selectedTrack}
+        onChange={(event) => onTrackChange(event.target.value)}
+      >
+        {specialistTracks.map((track) => (
+          <option key={track.title} value={track.title}>
+            {track.title}
+          </option>
+        ))}
       </select>
-      <button className="button button-primary form-submit" type="submit" disabled={sending}>
-        {sending ? "Sending..." : "Enquire about this pathway"} <ArrowRight size={17} />
+      <button
+        className="button button-primary form-submit"
+        type="submit"
+        disabled={sending}
+      >
+        {sending ? "Sending..." : "Enquire about this pathway"}{" "}
+        <ArrowRight size={17} />
       </button>
-      {error && <p className="form-error" role="alert">{error}</p>}
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
     </>
   );
 }
@@ -695,7 +1146,10 @@ function WhoThisIsForCard() {
     { label: "People beginning a career in real estate", icon: Users },
     { label: "Property professionals building AI skills", icon: House },
     { label: "Real estate marketing teams and managers", icon: Megaphone },
-    { label: "Experienced professionals pursuing strategic growth", icon: Target },
+    {
+      label: "Experienced professionals pursuing strategic growth",
+      icon: Target,
+    },
   ];
 
   return (
@@ -706,47 +1160,41 @@ function WhoThisIsForCard() {
       <ul>
         {audiences.map(({ label, icon: AudienceIcon }) => (
           <li key={label}>
-            <span className="audience-role-icon" aria-hidden="true"><AudienceIcon size={16} strokeWidth={1.8} /></span>
+            <span className="audience-role-icon" aria-hidden="true">
+              <AudienceIcon size={16} strokeWidth={1.8} />
+            </span>
             <span>{label}</span>
           </li>
         ))}
       </ul>
       <p className="audience-partnership">
-        <strong>After course completion:</strong> Internship assistance with OneX Properties.
+        <strong>After course completion:</strong> Internship assistance with
+        OneX Properties.
       </p>
     </section>
   );
 }
 
-function CourseEnrollmentCard({
-  selectedTrack,
-  onTrackChange,
-}) {
+function CourseEnrollmentCard({ selectedTrack, onTrackChange }) {
   const formRef = useRef(null);
-  const responseFrameRef = useRef(null);
-  const requestIdInputRef = useRef(null);
-  const {
-    actionUrl,
-    handleSubmit,
-    resetSubmission,
-    sending,
-    submitted,
-    error,
-  } = useLeadSheetSubmission({ formRef, responseFrameRef, requestIdInputRef });
+  const { handleSubmit, resetSubmission, sending, submitted, error } =
+    useLeadSheetSubmission({ formRef });
 
   return (
-    <section className="enquiry-section" id="enquire" aria-label="Register your interest">
-      <form
-        ref={formRef}
-        className="enquiry-form"
-        action={actionUrl}
-        method="post"
-        target="show-interest-sheet-response"
-        onSubmit={handleSubmit}
-      >
-        <input ref={requestIdInputRef} name="requestId" type="hidden" />
+    <section
+      className="enquiry-section"
+      id="enquire"
+      aria-label="Register your interest"
+    >
+      <form ref={formRef} className="enquiry-form" onSubmit={handleSubmit}>
         <input name="source" type="hidden" value="show-interest-form" />
-        <input name="website" type="text" tabIndex={-1} autoComplete="off" hidden />
+        <input
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          hidden
+        />
         <InterestForm
           selectedTrack={selectedTrack}
           onTrackChange={onTrackChange}
@@ -757,12 +1205,6 @@ function CourseEnrollmentCard({
         />
       </form>
       <WhoThisIsForCard />
-      <iframe
-        ref={responseFrameRef}
-        className="lead-popup-response-frame"
-        name="show-interest-sheet-response"
-        title="Show interest submission response"
-      />
     </section>
   );
 }
@@ -775,7 +1217,9 @@ export default function Home() {
   function goToEnquiry(track) {
     if (track) setSelectedTrack(track);
     document.getElementById("enquire").scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
       block: "start",
     });
   }
@@ -787,10 +1231,16 @@ export default function Home() {
 
   return (
     <>
-      <a className="skip-link" href="#about">Skip to content</a>
+      <a className="skip-link" href="#about">
+        Skip to content
+      </a>
       <Navbar links={navigationLinks} onGetStarted={() => goToEnquiry()} />
       <main>
         <AiCourseHero onGetStarted={() => goToEnquiry()} />
+        <PathwayCarousel
+          onViewCurriculum={openTrackSyllabus}
+          onGetStarted={goToEnquiry}
+        />
         <AiAcademyOverview onGetStarted={() => goToEnquiry()} />
         <AlumniGallery />
         <WhyChooseAcademy />
