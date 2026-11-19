@@ -1067,7 +1067,7 @@ function TrackSyllabusModal({ track, onClose }) {
             ref={formRef}
             onSubmit={handleSubmit}
           >
-            <input name="source" type="hidden" value="show-interest-form" />
+            <input name="source" type="hidden" value="curriculum-download" />
             <input name="track" type="hidden" value={tier.title} />
             <input
               name="website"
