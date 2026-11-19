@@ -853,19 +853,19 @@ function BrokerRoadmap({ isProgressing }) {
       >
         <path
           className="broker-roadmap-track-dotted"
-          d="M 1000 120 C 960 120 940 120 890 120"
+          d="M 0 120 C 40 120 60 120 110 120"
         />
         <path
           className="broker-roadmap-track-base"
-          d="M 890 120 C 792.5 120 792.5 220 695 220 C 597.5 220 597.5 120 500 120 C 402.5 120 402.5 220 305 220 C 207.5 220 207.5 120 110 120"
+          d="M 110 120 C 207.5 120 207.5 220 305 220 C 402.5 220 402.5 120 500 120 C 597.5 120 597.5 220 695 220 C 792.5 220 792.5 120 890 120"
         />
         <path
           className="broker-roadmap-track-dotted"
-          d="M 110 120 C 60 120 40 220 0 220"
+          d="M 890 120 C 940 120 960 220 1000 220"
         />
         <path
           className="broker-roadmap-track-progress"
-          d="M 1000 120 C 960 120 940 120 890 120"
+          d="M 0 120 C 40 120 60 120 110 120"
         />
       </svg>
       <svg
@@ -888,7 +888,7 @@ function BrokerRoadmap({ isProgressing }) {
             className={`broker-roadmap-step${index % 2 ? " is-below" : " is-above"}${isProgressing && index === 0 ? " is-reached" : ""}`}
             key={title}
             style={{
-              "--step-x": `${89 - index * 19.5}%`,
+              "--step-x": `${11 + index * 19.5}%`,
               "--step-y": index % 2 ? "68.75%" : "37.5%",
               "--step-order": index,
             }}
