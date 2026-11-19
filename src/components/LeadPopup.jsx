@@ -1,20 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Check, ChevronDown, Phone, Search, X } from "lucide-react";
-import { getCountries, getCountryCallingCode } from "react-phone-number-input";
-import flags from "react-phone-number-input/flags";
-import countryNames from "react-phone-number-input/locale/en";
+import { ArrowRight, Check, Phone, X } from "lucide-react";
 import { specialistTracks } from "../data/aiCourse.js";
 import useLeadSheetSubmission from "../hooks/useLeadSheetSubmission.js";
+import CountryPhoneField from "./CountryPhoneField.jsx";
 import "./LeadPopup.css";
-
-const countries = getCountries()
-  .map((code) => ({
-    code,
-    name: countryNames[code],
-    callingCode: `+${getCountryCallingCode(code)}`,
-    Flag: flags[code],
-  }))
-  .sort((a, b) => a.name.localeCompare(b.name));
 
 const timeSlots = [
   "Morning (9 AM – 12 PM)",
@@ -22,106 +11,9 @@ const timeSlots = [
   "Evening (4 PM – 8 PM)",
 ];
 
-function CountryCodePicker({ value, onChange }) {
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const pickerRef = useRef(null);
-  const buttonRef = useRef(null);
-  const searchRef = useRef(null);
-  const selectedCountry = countries.find(({ code }) => code === value);
-  const normalizedQuery = query.trim().toLocaleLowerCase();
-  const filteredCountries = countries.filter(({ code, name, callingCode }) =>
-    `${name} ${code} ${callingCode}`.toLocaleLowerCase().includes(normalizedQuery),
-  );
-  const SelectedFlag = selectedCountry.Flag;
-
-  useEffect(() => {
-    if (!open) {
-      setQuery("");
-      return undefined;
-    }
-
-    function closeOnOutsideClick(event) {
-      if (!pickerRef.current?.contains(event.target)) setOpen(false);
-    }
-
-    function closeOnEscape(event) {
-      if (event.key === "Escape") {
-        setOpen(false);
-        buttonRef.current?.focus();
-      }
-    }
-
-    document.addEventListener("pointerdown", closeOnOutsideClick);
-    document.addEventListener("keydown", closeOnEscape);
-    searchRef.current?.focus();
-    return () => {
-      document.removeEventListener("pointerdown", closeOnOutsideClick);
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [open]);
-
-  function chooseCountry(code) {
-    onChange(code);
-    setOpen(false);
-    buttonRef.current?.focus();
-  }
-
-  return (
-    <div className="lead-popup-country-picker" ref={pickerRef}>
-      <button
-        ref={buttonRef}
-        className="lead-popup-country-button"
-        type="button"
-        aria-label={`Country code: ${selectedCountry.name} ${selectedCountry.callingCode}`}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-        onClick={() => setOpen((isOpen) => !isOpen)}
-      >
-        <SelectedFlag title={`${selectedCountry.name} flag`} aria-hidden="true" />
-        <span>{selectedCountry.callingCode}</span>
-        <ChevronDown size={14} aria-hidden="true" />
-      </button>
-      {open && (
-        <div className="lead-popup-country-menu" role="dialog" aria-label="Select country code">
-          <div className="lead-popup-country-search">
-            <Search size={15} aria-hidden="true" />
-            <input
-              ref={searchRef}
-              type="search"
-              aria-label="Search countries"
-              placeholder="Search countries"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </div>
-          <div className="lead-popup-country-list">
-            {filteredCountries.length ? filteredCountries.map(({ code, name, callingCode, Flag }) => (
-              <button
-                key={code}
-                className="lead-popup-country-option"
-                type="button"
-                aria-pressed={code === value}
-                onClick={() => chooseCountry(code)}
-              >
-                <Flag title={`${name} flag`} aria-hidden="true" />
-                <span>{name}</span>
-                <span>{callingCode}</span>
-              </button>
-            )) : (
-              <p className="lead-popup-country-empty">No countries match your search.</p>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function LeadPopup() {
   const [open, setOpen] = useState(false);
   const [enquiryVisible, setEnquiryVisible] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState("IN");
   const launcherRef = useRef(null);
   const nameRef = useRef(null);
   const formRef = useRef(null);
@@ -251,27 +143,11 @@ export default function LeadPopup() {
                 required
               />
 
-              <label htmlFor="lp-phone">WhatsApp number</label>
-              <div className="lead-popup-phone">
-                <input
-                  name="countryCode"
-                  type="hidden"
-                  value={`+${getCountryCallingCode(selectedCountry)}`}
-                />
-                <CountryCodePicker
-                  value={selectedCountry}
-                  onChange={setSelectedCountry}
-                />
-                <input
-                  id="lp-phone"
-                  name="phone"
-                  type="tel"
-                  autoComplete="tel-national"
-                  inputMode="tel"
-                  placeholder="98765 43210"
-                  required
-                />
-              </div>
+              <CountryPhoneField
+                id="lp-phone"
+                label="WhatsApp number"
+                placeholder="98765 43210"
+              />
 
               <label htmlFor="lp-pathway">Learning pathway</label>
               <select id="lp-pathway" name="pathway" defaultValue={specialistTracks[0].title}>

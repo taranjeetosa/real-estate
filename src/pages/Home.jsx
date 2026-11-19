@@ -6,6 +6,7 @@ import {
   ChevronRight,
   Check,
   Clock3,
+  Download,
   FileText,
   House,
   Megaphone,
@@ -19,6 +20,7 @@ import {
 import Footer from "../components/Footer.jsx";
 import Navbar from "../components/Navbar.jsx";
 import LeadPopup from "../components/LeadPopup.jsx";
+import CountryPhoneField from "../components/CountryPhoneField.jsx";
 import useLeadSheetSubmission from "../hooks/useLeadSheetSubmission.js";
 import {
   brokerRoadmapSteps,
@@ -950,10 +952,14 @@ function CourseJourney({ onGetStarted }) {
   );
 }
 
-function TrackSyllabusModal({ track, onClose, onGetStarted }) {
+function TrackSyllabusModal({ track, onClose }) {
   const dialogRef = useRef(null);
   const closeButtonRef = useRef(null);
+  const formRef = useRef(null);
   const tier = specialistTracks.find(({ title }) => title === track);
+  const { handleSubmit, sending, submitted, error } = useLeadSheetSubmission({
+    formRef,
+  });
 
   useEffect(() => {
     if (!track) return undefined;
@@ -969,10 +975,17 @@ function TrackSyllabusModal({ track, onClose, onGetStarted }) {
     };
   }, [track]);
 
-  if (!track) return null;
+  if (!track || !tier) return null;
 
   function handleKeyDown(event) {
     if (event.key === "Escape") {
+      if (
+        dialogRef.current?.querySelector(
+          ".country-code-picker button[aria-expanded='true']",
+        )
+      ) {
+        return;
+      }
       event.preventDefault();
       onClose();
       return;
@@ -981,7 +994,7 @@ function TrackSyllabusModal({ track, onClose, onGetStarted }) {
     if (event.key !== "Tab") return;
 
     const focusableElements = dialogRef.current?.querySelectorAll(
-      "button:not([disabled]), a[href]",
+      "button:not([disabled]), a[href], input:not([disabled]):not([type='hidden']):not([tabindex='-1']), select:not([disabled]), textarea:not([disabled])",
     );
     if (!focusableElements?.length) return;
 
@@ -1035,13 +1048,72 @@ function TrackSyllabusModal({ track, onClose, onGetStarted }) {
           {tier.focus} One Stock Academy also provides real-world assistance and
           post-course internship assistance with OneX Properties.
         </p>
-        <button
-          className="button track-modal-download"
-          type="button"
-          onClick={() => onGetStarted(track)}
-        >
-          Enquire about this tier <ArrowRight size={19} />
-        </button>
+        {submitted ? (
+          <div className="curriculum-lead-success" role="status">
+            <p>Your details have been submitted. Your curriculum is ready.</p>
+            <a
+              className="button track-modal-download"
+              href={tier.curriculumUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Download the ${tier.title} curriculum PDF`}
+            >
+              Download Curriculum <Download size={19} aria-hidden="true" />
+            </a>
+          </div>
+        ) : (
+          <form
+            className="curriculum-lead-form"
+            ref={formRef}
+            onSubmit={handleSubmit}
+          >
+            <input name="source" type="hidden" value="show-interest-form" />
+            <input name="track" type="hidden" value={tier.title} />
+            <input
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              hidden
+            />
+            <label htmlFor="curriculum-lead-name">Your name</label>
+            <input
+              id="curriculum-lead-name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              placeholder="e.g. Alex Morgan"
+              required
+            />
+            <label htmlFor="curriculum-lead-email">Email address</label>
+            <input
+              id="curriculum-lead-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              required
+            />
+            <CountryPhoneField
+              id="curriculum-lead-phone"
+              label="Phone number"
+              placeholder="98765 43210"
+            />
+            <button
+              className="button button-primary curriculum-lead-submit"
+              type="submit"
+              disabled={sending}
+            >
+              {sending ? "Submitting..." : "Submit details to unlock"}
+              <ArrowRight size={17} aria-hidden="true" />
+            </button>
+            {error && (
+              <p className="curriculum-lead-error" role="alert">
+                {error}
+              </p>
+            )}
+          </form>
+        )}
       </section>
     </div>
   );
@@ -1128,15 +1200,10 @@ function InterestForm({
         placeholder="you@example.com"
         required
       />
-      <label htmlFor="phone">Phone number</label>
-      <input
+      <CountryPhoneField
         id="phone"
-        name="phone"
-        type="tel"
-        autoComplete="tel"
-        inputMode="tel"
-        placeholder="+91 98765 43210"
-        required
+        label="Phone number"
+        placeholder="98765 43210"
       />
       <label htmlFor="track">Choose a learning pathway</label>
       <select
@@ -1321,14 +1388,13 @@ export default function Home() {
       </main>
       <Footer />
       <LeadPopup />
-      <TrackSyllabusModal
-        track={activeTrack}
-        onClose={closeTrackModal}
-        onGetStarted={(track) => {
-          closeTrackModal();
-          goToEnquiry(track);
-        }}
-      />
+      {activeTrack && (
+        <TrackSyllabusModal
+          key={activeTrack}
+          track={activeTrack}
+          onClose={closeTrackModal}
+        />
+      )}
     </>
   );
 }

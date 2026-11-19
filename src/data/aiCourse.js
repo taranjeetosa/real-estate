@@ -3,6 +3,8 @@ import { Award, BriefcaseBusiness, Building2, TrendingUp } from "lucide-react";
 export const specialistTracks = [
   {
     title: "AI for Real Estate Professional",
+    curriculumUrl:
+      "https://drive.google.com/uc?export=download&id=1T2fBo7efLy12y3XYNDKP3xZhkLQGHU2O",
     duration: "5 weeks",
     level: "Beginner to intermediate",
     image: "/pexels-thisisengineering-3913031.jpg",
@@ -13,6 +15,8 @@ export const specialistTracks = [
   },
   {
     title: "AI for Real Estate Manager",
+    curriculumUrl:
+      "https://drive.google.com/uc?export=download&id=1LO2XzK_f2bpvBCjwjrFt1oAWIFG0C7zR",
     duration: "4 weeks",
     level: "Beginner to intermediate",
     image: "/executive-slider.jpeg",
@@ -23,6 +27,8 @@ export const specialistTracks = [
   },
   {
     title: "AI for Real Estate Expert",
+    curriculumUrl:
+      "https://drive.google.com/uc?export=download&id=14BEo3CrSzWafjHhC0VRQRLNhvdr638-V",
     duration: "6 weeks",
     level: "Intermediate to expert",
     image: "/pexels-mikhail-nilov-7988217.jpg",
