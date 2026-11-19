@@ -112,7 +112,7 @@ export const brokerRoadmapSteps = [
   {
     title: "Employment",
     description:
-      "Become part of our partner's friendly team, acquire your first clients, and apply your knowledge in practice.",
+      "If selected to join our partner's team, receive CRM access and apply your training while working with clients.",
   },
   {
     title: "First deal",
